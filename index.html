@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>受験料シミュレーター | 大学受験料・割引かんたん計算</title>
+<meta name="description" content="大学・入試方式・学部学科を選ぶだけで受験料と割引を自動計算。法政・中央・明治・早稲田・上智・東京理科大・日大・東洋・駒澤・専修に対応。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --border: #E2E0D8;
+    --border-strong: #C8C5BA;
+    --text: #1A1916;
+    --text-secondary: #6B6860;
+    --text-tertiary: #9B9890;
+    --accent: #1A1916;
+    --accent-fg: #F7F6F2;
+    --green-bg: #EBF5EC;
+    --green-text: #1B5E20;
+    --chip-selected-bg: #1A1916;
+    --chip-selected-fg: #F7F6F2;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-pill: 100px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  header {
+    background: var(--accent);
+    color: var(--accent-fg);
+    padding: 20px 20px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+
+  header p {
+    font-size: 11px;
+    opacity: 0.6;
+    font-weight: 400;
+  }
+
+  .main {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 16px 16px 0;
+  }
+
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .step-card.active {
+    border-color: var(--accent);
+  }
+
+  .step-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .step-badge {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .step-badge.active { background: var(--accent); color: var(--accent-fg); }
+  .step-badge.done { background: var(--green-bg); color: var(--green-text); }
+  .step-badge.inactive { background: var(--border); color: var(--text-tertiary); }
+
+  .step-label { font-size: 13px; font-weight: 500; }
+  .step-value { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+
+  .chip-wrap {
+    padding: 0 14px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .chip {
+    padding: 7px 13px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1.4;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .chip:active { transform: scale(0.97); }
+
+  .chip.selected {
+    background: var(--chip-selected-bg);
+    color: var(--chip-selected-fg);
+    border-color: var(--chip-selected-bg);
+  }
+
+  .note-bar {
+    margin: 0 14px 14px;
+    padding: 9px 12px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    border-left: 3px solid var(--border-strong);
+  }
+
+  .result-card {
+    background: var(--surface);
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .result-header {
+    background: var(--accent);
+    color: var(--accent-fg);
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .result-body { padding: 14px 16px; }
+
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .result-row:last-child { border-bottom: none; }
+
+  .result-row-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  .result-row-price {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .result-total {
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--accent);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .result-total-label {
+    font-size: 13px;
+    color: var(--accent-fg);
+    opacity: 0.7;
+  }
+
+  .result-total-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-fg);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: -0.5px;
+  }
+
+  .savings-bar {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--green-bg);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--green-text);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .reset-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 12px;
+  }
+
+  .reset-btn:active { transform: scale(0.98); background: var(--border); }
+
+  .divider { height: 1px; background: var(--border); margin: 0 16px 14px; }
+
+  footer {
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>受験料シミュレーター</h1>
+  <p>大学・入試方式・学部を選んで受験料を自動計算</p>
+</header>
+
+<div class="main" id="app"></div>
+
+<footer>
+  データは各大学公式サイト・マナビジョン（2026年度）に基づきます<br>
+  最新情報は必ず各大学公式サイトでご確認ください
+</footer>
+
+<script>
+const DB = {
+  "法政大学": {
+    methods: {
+      "T日程・英語外部試験利用": {
+        baseFee: 35000, extraFee: 15000,
+        note: "T日程・英語外部試験利用入試のみ割引対象。2出願目以降15,000円",
+        faculties: ["法学部（法律学科）","法学部（政治学科）","法学部（国際政治学科）","文学部（哲学科）","文学部（日本文学科）","文学部（英文学科）","文学部（史学科）","文学部（地理学科）","文学部（心理学科）","経営学部（経営学科）","経営学部（経営戦略学科）","経営学部（市場経営学科）","国際文化学部","人間環境学部","キャリアデザイン学部","GIS（グローバル教養学部）","デザイン工学部（建築学科）","デザイン工学部（都市環境デザイン工学科）","デザイン工学部（システムデザイン学科）","経済学部（経済学科）","経済学部（国際経済学科）","経済学部（現代ビジネス学科）","社会学部（社会学科）","社会学部（社会政策科学科）","社会学部（メディア社会学科）","現代福祉学部（福祉コミュニティ学科）","現代福祉学部（臨床心理学科）","スポーツ健康学部","情報科学部（コンピュータ科学科）","情報科学部（ディジタルメディア学科）","理工学部（機械工学科）","理工学部（電気電子工学科）","理工学部（応用情報工学科）","理工学部（経営システム工学科）","理工学部（創生科学科）","生命科学部（生命機能学科）","生命科学部（環境応用化学科）"]
+      },
+      "A方式（個別学部日程）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。各学部個別日程",
+        faculties: ["法学部（法律学科）","法学部（政治学科）","法学部（国際政治学科）","文学部（哲学科）","文学部（日本文学科）","文学部（英文学科）","文学部（史学科）","文学部（地理学科）","文学部（心理学科）","経営学部（経営学科）","経営学部（経営戦略学科）","経営学部（市場経営学科）","国際文化学部","人間環境学部","キャリアデザイン学部","デザイン工学部（建築学科）","デザイン工学部（都市環境デザイン工学科）","デザイン工学部（システムデザイン学科）","経済学部（経済学科）","経済学部（国際経済学科）","経済学部（現代ビジネス学科）","社会学部（社会学科）","社会学部（社会政策科学科）","社会学部（メディア社会学科）","現代福祉学部（福祉コミュニティ学科）","現代福祉学部（臨床心理学科）","スポーツ健康学部","情報科学部（コンピュータ科学科）","情報科学部（ディジタルメディア学科）","理工学部（機械工学科）","理工学部（電気電子工学科）","理工学部（応用情報工学科）","理工学部（経営システム工学科）","理工学部（創生科学科）","生命科学部（生命機能学科）","生命科学部（環境応用化学科）"]
+      },
+      "共通テスト利用（B方式・C方式）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし",
+        faculties: ["法学部（法律学科）","法学部（政治学科）","法学部（国際政治学科）","文学部（各学科）","経営学部（各学科）","国際文化学部","人間環境学部","キャリアデザイン学部","デザイン工学部（各学科）","経済学部（各学科）","社会学部（各学科）","現代福祉学部（各学科）","スポーツ健康学部","情報科学部（各学科）","理工学部（各学科）","生命科学部（各学科）"]
+      }
+    }
+  },
+  "中央大学": {
+    methods: {
+      "5学部共通選抜": {
+        baseFee: 35000, extraFee: 15000,
+        note: "2出願目以降15,000円",
+        faculties: ["法学部（法律学科）","法学部（国際企業関係法学科）","法学部（政治学科）","経済学部（経済学科）","経済学部（経済情報システム学科）","経済学部（国際経済学科）","経済学部（公共・環境経済学科）","商学部（経営学科）","商学部（会計学科）","商学部（国際マーケティング学科）","商学部（金融学科）","文学部（哲学科）","文学部（歴史学科）","文学部（国文学科）","文学部（英語文学文化学科）","文学部（ドイツ語文学文化学科）","文学部（フランス語文学文化学科）","文学部（日本史学科）","文学部（東洋史学科）","文学部（西洋史学科）","文学部（社会学科）","文学部（社会情報学科）","文学部（教育学科）","文学部（国際情報学科）","総合政策学部（政策科学科）","総合政策学部（国際政策文化学科）"]
+      },
+      "学部別選抜（一般）": {
+        baseFee: 35000, extraFee: 15000,
+        note: "同学部内2出願目以降15,000円。経済学部Ⅱは別途35,000円。商学部・共通テスト併用は割引対象外",
+        faculties: ["法学部（法律学科）","法学部（国際企業関係法学科）","法学部（政治学科）","経済学部（経済学科）Ⅰ","経済学部（経済情報システム学科）Ⅰ","経済学部（国際経済学科）Ⅰ","経済学部（公共・環境経済学科）Ⅰ","商学部（経営学科）","商学部（会計学科）","商学部（国際マーケティング学科）","商学部（金融学科）","文学部（各学科）","総合政策学部（各学科）","理工学部（数学科）","理工学部（物理学科）","理工学部（都市環境学科）","理工学部（精密機械工学科）","理工学部（電気電子情報通信工学科）","理工学部（応用化学科）","理工学部（ビジネスデータサイエンス学科）","理工学部（情報工学科）","理工学部（生命科学科）","理工学部（人間総合理工学科）","国際情報学部（国際情報学科）"]
+      },
+      "共通テスト利用": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし",
+        faculties: ["法学部","経済学部","商学部","文学部","総合政策学部","理工学部","国際情報学部","国際経営学部"]
+      }
+    }
+  },
+  "明治大学": {
+    methods: {
+      "全学部統一入試": {
+        baseFee: 35000, extraFee: 20000,
+        note: "2出願目以降20,000円",
+        faculties: ["法学部","商学部","政治経済学部（政治学科）","政治経済学部（経済学科）","政治経済学部（地域行政学科）","文学部（文学科 日本文学専攻）","文学部（文学科 英米文学専攻）","文学部（史学地理学科 日本史学専攻）","文学部（史学地理学科 アジア史専攻）","文学部（史学地理学科 西洋史学専攻）","文学部（史学地理学科 地理学専攻）","文学部（心理社会学科）","理工学部（電気電子生命学科）","理工学部（機械工学科）","理工学部（機械情報工学科）","理工学部（建築学科）","理工学部（応用化学科）","理工学部（情報科学科）","理工学部（数学科）","理工学部（物理学科）","農学部（農学科）","農学部（農芸化学科）","農学部（生命科学科）","農学部（食料環境政策学科）","経営学部（経営学科）","経営学部（会計学科）","経営学部（公共経営学科）","情報コミュニケーション学部","国際日本学部","総合数理学部（現象数理学科）","総合数理学部（先端メディアサイエンス学科）","総合数理学部（ネットワークデザイン学科）"]
+      },
+      "学部別入試": {
+        baseFee: 35000, extraFee: 20000,
+        note: "同学部内2出願目以降20,000円",
+        faculties: ["法学部","商学部","政治経済学部（各学科）","文学部（各専攻）","理工学部（各学科）","農学部（各学科）","経営学部（各学科）","情報コミュニケーション学部","国際日本学部","総合数理学部（各学科）"]
+      },
+      "共通テスト利用": {
+        baseFee: 18000, extraFee: 18000,
+        note: "一律18,000円・割引なし",
+        faculties: ["法学部","商学部","政治経済学部","文学部","理工学部","農学部","経営学部","情報コミュニケーション学部","国際日本学部","総合数理学部"]
+      }
+    }
+  },
+  "早稲田大学": {
+    methods: {
+      "一般選抜（文・文化構想学部）": {
+        baseFee: 35000, extraFee: 20000,
+        note: "文学部・文化構想学部のみ割引対象。2方式55,000円・3方式75,000円",
+        faculties: ["文学部","文化構想学部"]
+      },
+      "一般選抜（その他学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし",
+        faculties: ["政治経済学部（政治学科）","政治経済学部（経済学科）","政治経済学部（国際政治経済学科）","法学部","教育学部（各学科）","商学部","基幹理工学部（各学系）","創造理工学部（各学科）","先進理工学部（各学科）","社会科学部","人間科学部（各学科）","スポーツ科学部","国際教養学部"]
+      },
+      "共通テスト利用": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし",
+        faculties: ["政治経済学部","法学部","商学部","社会科学部","教育学部","文化構想学部","文学部","基幹理工学部","創造理工学部","先進理工学部","人間科学部","スポーツ科学部"]
+      }
+    }
+  },
+  "上智大学": {
+    methods: {
+      "TEAP利用型・学部学科試験共通テスト併用": {
+        baseFee: 35000, extraFee: 20000,
+        note: "2出願目以降20,000円。全方式・学科またがって適用",
+        faculties: ["神学部（神学科）","文学部（哲学科）","文学部（史学科）","文学部（国文学科）","文学部（英文学科）","文学部（ドイツ文学科）","文学部（フランス文学科）","文学部（新聞学科）","総合人間科学部（教育学科）","総合人間科学部（心理学科）","総合人間科学部（社会学科）","総合人間科学部（社会福祉学科）","総合人間科学部（看護学科）","法学部（法律学科）","法学部（国際関係法学科）","法学部（地球環境法学科）","経済学部（経済学科）","経済学部（経営学科）","経済学部（会計学科）","外国語学部（英語学科）","外国語学部（ドイツ語学科）","外国語学部（フランス語学科）","外国語学部（イスパニア語学科）","外国語学部（ロシア語学科）","外国語学部（ポルトガル語学科）","国際教養学部（国際教養学科）","理工学部（数学科）","理工学部（情報理工学科）","理工学部（機能創造理工学科）","理工学部（物質生命理工学科）"]
+      },
+      "共通テスト利用": {
+        baseFee: 35000, extraFee: 20000,
+        note: "2出願目以降20,000円",
+        faculties: ["神学部","文学部（各学科）","総合人間科学部（各学科）","法学部（各学科）","経済学部（各学科）","外国語学部（各学科）","国際教養学部","理工学部（各学科）"]
+      }
+    }
+  },
+  "東京理科大学": {
+    methods: {
+      "B方式・C方式・グローバル方式": {
+        baseFee: 35000, extraFee: 15000,
+        note: "2出願目以降一律15,000円（業界最安水準）",
+        faculties: ["理学部第一部（数学科）","理学部第一部（物理学科）","理学部第一部（化学科）","理学部第一部（応用数学科）","理学部第一部（応用物理学科）","理学部第一部（応用化学科）","工学部（建築学科）","工学部（工業化学科）","工学部（電気工学科）","工学部（情報工学科）","工学部（機械工学科）","薬学部（薬学科）","薬学部（生命創薬科学科）","経営学部（経営学科）","経営学部（ビジネスエコノミクス学科）","経営学部（国際デザイン経営学科）","創域理工学部（数理科学科）","創域理工学部（先端物理学科）","創域理工学部（情報計算科学科）","創域理工学部（生命生物科学科）","創域理工学部（建築学科）","創域理工学部（先端化学科）","創域理工学部（電気電子情報工学科）","創域理工学部（経営システム工学科）","創域理工学部（機械航空宇宙工学科）","創域理工学部（社会基盤工学科）","先進工学部（マテリアル創成工学科）","先進工学部（生命システム工学科）","先進工学部（電子システム工学科）","先進工学部（機能デザイン工学科）","先進工学部（情報システム工学科）"]
+      },
+      "共通テスト利用": {
+        baseFee: 35000, extraFee: 15000,
+        note: "2出願目以降一律15,000円",
+        faculties: ["理学部第一部","工学部","薬学部","経営学部","創域理工学部","先進工学部"]
+      }
+    }
+  },
+  "日本大学": {
+    methods: {
+      "A個別方式": {
+        baseFee: 35000, extraFee: 35000,
+        note: "文理学部は2学科目10,000円・3学科目以降5,000円。他学部は割引なし",
+        faculties: ["法学部（法律学科）","法学部（政治経済学科）","法学部（新聞学科）","法学部（経営法学科）","文理学部（哲学科）","文理学部（史学科）","文理学部（国文学科）","文理学部（英文学科）","文理学部（ドイツ文学科）","文理学部（中国語中国文化学科）","文理学部（社会学科）","文理学部（社会福祉学科）","文理学部（教育学科）","文理学部（体育学科）","文理学部（心理学科）","文理学部（地理学科）","文理学部（地球科学科）","文理学部（数学科）","文理学部（情報科学科）","文理学部（物理学科）","文理学部（生命科学科）","経済学部（経済学科）","経済学部（産業経営学科）","経済学部（金融公共経済学科）","商学部（商業学科）","商学部（経営学科）","商学部（会計学科）","国際関係学部","危機管理学部","スポーツ科学部","理工学部（各学科）","生産工学部（各学科）","工学部（各学科）","生物資源科学部（各学科）"]
+      },
+      "N全学統一方式": {
+        baseFee: 18000, extraFee: 18000,
+        note: "一律18,000円。A個別と同一学科を同時出願するとN全学分が0円",
+        faculties: ["法学部","文理学部","経済学部","商学部","芸術学部","国際関係学部","危機管理学部","スポーツ科学部","理工学部","生産工学部","工学部","生物資源科学部"]
+      },
+      "共通テスト利用（C方式）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし",
+        faculties: ["法学部","文理学部","経済学部","商学部","理工学部","生産工学部","工学部","生物資源科学部"]
+      }
+    }
+  },
+  "東洋大学": {
+    methods: {
+      "一般入試（前期・同日併願）": {
+        baseFee: 35000, extraFee: 0, thirdFee: 20000,
+        note: "2出願目0円（無料）・3出願目以降20,000円。同一試験日の併願のみ適用",
+        faculties: ["文学部（哲学科）","文学部（東洋思想文化学科）","文学部（日本文学文化学科）","文学部（英米文学科）","文学部（史学科）","文学部（教育学科）","文学部（国際文化コミュニケーション学科）","経済学部（経済学科）","経済学部（国際経済学科）","経済学部（総合政策学科）","経営学部（経営学科）","経営学部（マーケティング学科）","経営学部（会計ファイナンス学科）","法学部（法律学科）","社会学部（社会学科）","社会学部（社会文化システム学科）","社会学部（メディアコミュニケーション学科）","社会学部（社会心理学科）","社会学部（社会福祉学科）","国際学部（国際学科）","国際学部（グローバルイノベーション学科）","国際観光学部（国際観光学科）","情報連携学部（情報連携学科）","ライフデザイン学部（生活支援学科）","ライフデザイン学部（健康スポーツ学科）","ライフデザイン学部（人間環境デザイン学科）","理工学部（機械工学科）","理工学部（生体医工学科）","理工学部（電気電子情報工学科）","理工学部（応用化学科）","理工学部（都市環境工学科）","理工学部（建築学科）","総合情報学部（総合情報学科）","食環境科学部（食環境科学科）","食環境科学部（栄養科学科）","健康スポーツ科学部（健康スポーツ科学科）"]
+      },
+      "共通テスト利用（前期）": {
+        baseFee: 20000, extraFee: 20000, thirdFee: 10000,
+        note: "1〜2出願目20,000円・3出願目以降10,000円",
+        faculties: ["文学部","経済学部","経営学部","法学部","社会学部","国際学部","国際観光学部","情報連携学部","ライフデザイン学部","理工学部","総合情報学部","食環境科学部","健康スポーツ科学部"]
+      }
+    }
+  },
+  "駒澤大学": {
+    methods: {
+      "全学部統一日程選抜": {
+        baseFee: 35000, extraFee: 17000,
+        note: "2〜3学科目17,000円。最大3学科まで（医療健康科学部除く）",
+        maxCount: 3,
+        faculties: ["仏教学部（禅学科）","仏教学部（仏教学科）","文学部（国文学科）","文学部（英米文学科）","文学部（地理学科）","文学部（歴史学科）","文学部（社会学科）","文学部（心理学科）","経済学部（経済学科）","経済学部（商学科）","法学部（法律学科）","法学部（政治学科）","経営学部（経営学科）","経営学部（市場戦略学科）","グローバル・メディア・スタディーズ学部（グローバル・メディア学科）"]
+      },
+      "T方式・S方式（一般選抜）": {
+        baseFee: 35000, extraFee: 30000,
+        note: "2学科目以降30,000円。2月・3月またぎは割引なし",
+        faculties: ["仏教学部（禅学科）","仏教学部（仏教学科）","文学部（国文学科）","文学部（英米文学科）","文学部（地理学科）","文学部（歴史学科）","文学部（社会学科）","文学部（心理学科）","経済学部（経済学科）","経済学部（商学科）","法学部（法律学科）","法学部（政治学科）","経営学部（経営学科）","経営学部（市場戦略学科）","グローバル・メディア・スタディーズ学部（グローバル・メディア学科）","医療健康科学部（診療放射線技術科学科）","医療健康科学部（臨床検査技術科学科）"]
+      },
+      "共通テスト利用（前期）": {
+        baseFee: 18000, extraFee: 18000, thirdFee: 9000,
+        note: "1〜2学科目18,000円・3学科目以降9,000円",
+        faculties: ["仏教学部","文学部","経済学部","法学部","経営学部","グローバル・メディア・スタディーズ学部","医療健康科学部"]
+      }
+    }
+  },
+  "専修大学": {
+    methods: {
+      "全学部入試・学部個別入試（前期）": {
+        baseFee: 32000, extraFee: 32000,
+        note: "同一試験日内は割引あり（詳細は公式サイト参照）",
+        faculties: ["経済学部（経済学科）","経済学部（生活環境経済学科）","経済学部（国際経済学科）","法学部（法律学科）","法学部（政治学科）","経営学部（経営学科）","経営学部（ビジネスデザイン学科）","商学部（マーケティング学科）","商学部（会計学科）","文学部（哲学科）","文学部（日本語学科）","文学部（日本文学文化学科）","文学部（英語英米文化学科）","文学部（ドイツ語学科）","文学部（社会学科）","文学部（環境地理学科）","文学部（ジャーナリズム学科）","文学部（心理学科）","ネットワーク情報学部（ネットワーク情報学科）","人間科学部（心理学科）","人間科学部（社会学科）"]
+      },
+      "スカラシップ・全国入試": {
+        baseFee: 32000, extraFee: 0,
+        note: "スカラシップ＋全国・全学部入試の同時出願で追加分が免除",
+        faculties: ["経済学部","法学部","経営学部","商学部","文学部","ネットワーク情報学部","人間科学部"]
+      },
+      "共通テスト利用（前期）": {
+        baseFee: 17000, extraFee: 17000,
+        note: "1出願17,000円。複数学科・方式で割引あり（詳細は公式サイト）",
+        faculties: ["経済学部","法学部","経営学部","商学部","文学部（英語英米文化学科）","ネットワーク情報学部"]
+      }
+    }
+  }
+};
+
+function calcFee(univ, method, selected) {
+  const m = DB[univ].methods[method];
+  const count = selected.length;
+  if (count === 0) return [];
+  return selected.map((f, i) => {
+    let fee;
+    if (i === 0) {
+      fee = m.baseFee;
+    } else if (univ === "東洋大学" && method === "一般入試（前期・同日併願）") {
+      fee = i === 1 ? 0 : (m.thirdFee || 20000);
+    } else if ((univ === "東洋大学" && method === "共通テスト利用（前期）") ||
+               (univ === "駒澤大学" && method === "共通テスト利用（前期）")) {
+      fee = i < 2 ? m.baseFee : (m.thirdFee || 9000);
+    } else {
+      fee = m.extraFee;
+    }
+    return { name: f, fee };
+  });
+}
+
+let state = { university: null, method: null, selected: [] };
+
+function selectUniv(u) {
+  state = { university: u, method: null, selected: [] };
+  render();
+  setTimeout(() => {
+    const el = document.getElementById('step2');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function selectMethod(m) {
+  state.method = m;
+  state.selected = [];
+  render();
+  setTimeout(() => {
+    const el = document.getElementById('step3');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function toggleFaculty(f) {
+  const idx = state.selected.indexOf(f);
+  if (idx >= 0) state.selected.splice(idx, 1);
+  else state.selected.push(f);
+  render();
+}
+
+function reset() {
+  state = { university: null, method: null, selected: [] };
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function fmt(n) {
+  return n.toLocaleString('ja-JP') + '円';
+}
+
+function render() {
+  const app = document.getElementById('app');
+  const univs = Object.keys(DB);
+  let html = '';
+
+  // Step 1
+  const s1done = !!state.university;
+  html += `<div class="step-card ${!s1done ? 'active' : ''}">
+    <div class="step-header">
+      <div class="step-badge ${s1done ? 'done' : 'active'}">${s1done ? '✓' : '1'}</div>
+      <div>
+        <div class="step-label">大学を選ぶ</div>
+        ${s1done ? `<div class="step-value">${state.university}</div>` : ''}
+      </div>
+    </div>
+    <div class="chip-wrap">
+      ${univs.map(u => `<button class="chip ${state.university === u ? 'selected' : ''}" onclick="selectUniv('${u}')">${u}</button>`).join('')}
+    </div>
+  </div>`;
+
+  // Step 2
+  if (state.university) {
+    const methods = Object.keys(DB[state.university].methods);
+    const s2done = !!state.method;
+    html += `<div class="step-card ${s2done ? '' : 'active'}" id="step2">
+      <div class="step-header">
+        <div class="step-badge ${s2done ? 'done' : 'active'}">${s2done ? '✓' : '2'}</div>
+        <div>
+          <div class="step-label">入試方式を選ぶ</div>
+          ${s2done ? `<div class="step-value">${state.method}</div>` : ''}
+        </div>
+      </div>
+      <div class="chip-wrap">
+        ${methods.map(m => `<button class="chip ${state.method === m ? 'selected' : ''}" onclick="selectMethod('${m.replace(/'/g, "\\'")}')"><span style="line-height:1.5">${m}</span></button>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Step 3
+  if (state.method) {
+    const mData = DB[state.university].methods[state.method];
+    const s3done = state.selected.length > 0;
+    html += `<div class="step-card ${s3done ? '' : 'active'}" id="step3">
+      <div class="step-header">
+        <div class="step-badge ${s3done ? 'done' : 'active'}">${s3done ? '✓' : '3'}</div>
+        <div>
+          <div class="step-label">学部・学科を選ぶ（複数選択可）</div>
+          ${s3done ? `<div class="step-value">${state.selected.length}件選択中</div>` : ''}
+        </div>
+      </div>
+      <div class="note-bar">${mData.note}</div>
+      <div class="chip-wrap">
+        ${mData.faculties.map(f => `<button class="chip ${state.selected.includes(f) ? 'selected' : ''}" onclick="toggleFaculty('${f.replace(/'/g, "\\'")}')"><span style="line-height:1.5">${f}</span></button>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Result
+  if (state.selected.length > 0) {
+    const rows = calcFee(state.university, state.method, state.selected);
+    const total = rows.reduce((s, r) => s + r.fee, 0);
+    const normalTotal = 35000 * state.selected.length;
+    const saved = normalTotal - total;
+
+    html += `<div class="result-card">
+      <div class="result-header">受験料シミュレーション結果</div>
+      <div class="result-body">
+        ${rows.map((r, i) => `
+          <div class="result-row">
+            <div class="result-row-label">${i + 1}. ${r.name}</div>
+            <div class="result-row-price">${fmt(r.fee)}</div>
+          </div>`).join('')}
+        <div class="result-total">
+          <div class="result-total-label">${state.selected.length}出願 合計</div>
+          <div class="result-total-price">${fmt(total)}</div>
+        </div>
+        ${saved > 0 ? `<div class="savings-bar">🎉 割引で ${fmt(saved)} 節約！</div>` : ''}
+      </div>
+    </div>`;
+
+    html += `<button class="reset-btn" onclick="reset()">↩ 最初からやり直す</button>`;
+  }
+
+  app.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
