@@ -444,13 +444,50 @@ const DB = {
         faculties: ["経済学部","法学部","経営学部","商学部","文学部（英語英米文化学科）","ネットワーク情報学部"]
       }
     }
+  },
+  "立教大学": {
+    methods: {
+      "一般選抜": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引制度なし。全方式・全学部均一35,000円",
+        faculties: ["文学部（キリスト教学科）","文学部（文学科 日本文学専修）","文学部（文学科 英米文学専修）","文学部（文学科 ドイツ文学専修）","文学部（文学科 フランス文学専修）","文学部（史学科 日本史学専修）","文学部（史学科 西洋史学専修）","文学部（史学科 比較文明学専修）","文学部（教育学科）","異文化コミュニケーション学部（異文化コミュニケーション学科）","経済学部（経済学科）","経済学部（経済政策学科）","経済学部（会計ファイナンス学科）","経営学部（経営学科）","経営学部（国際経営学科）","理学部（数学科）","理学部（物理学科）","理学部（化学科）","理学部（生命理学科）","社会学部（社会学科）","社会学部（現代文化学科）","社会学部（メディア社会学科）","法学部（法学科）","法学部（国際ビジネス法学科）","法学部（政治学科）","観光学部（観光学科）","観光学部（交流文化学科）","コミュニティ福祉学部（コミュニティ政策学科）","コミュニティ福祉学部（福祉学科）","コミュニティ福祉学部（スポーツウエルネス学科）","現代心理学部（心理学科）","現代心理学部（映像身体学科）","GLAP（グローバル・リベラルアーツ・プログラム）"]
+      },
+      "共通テスト利用": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引制度なし。全方式・全学部均一",
+        faculties: ["文学部","異文化コミュニケーション学部","経済学部","経営学部","理学部","社会学部","法学部","観光学部","コミュニティ福祉学部","現代心理学部","GLAP"]
+      }
+    }
+  },
+  "青山学院大学": {
+    methods: {
+      "一般選抜（全学部日程）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引制度なし。ただし同一学部内の学科間併願は可能（文学部・法学部・経営学部・国際政治経済学部・理工学部）",
+        faculties: ["文学部（英米文学科）","文学部（フランス文学科）","文学部（日本文学科）","文学部（史学科）","文学部（比較芸術学科）","教育人間科学部（教育学科）","教育人間科学部（心理学科）","経済学部（経済学科）","経済学部（現代経済デザイン学科）","法学部（法学科）","法学部（ヒューマンライツ学科）","経営学部（経営学科）","経営学部（マーケティング学科）","国際政治経済学部（国際政治学科）","国際政治経済学部（国際経済学科）","国際政治経済学部（国際コミュニケーション学科）","総合文化政策学部（総合文化政策学科）","理工学部（物理科学科）","理工学部（数理サイエンス学科）","理工学部（化学・生命科学科）","理工学部（電気電子工学科）","理工学部（機械創造工学科）","理工学部（経営システム工学科）","理工学部（情報テクノロジー学科）","社会情報学部（社会情報学科）","地球社会共生学部（地球社会共生学科）","コミュニティ人間科学部（コミュニティ人間科学科）"]
+      },
+      "一般選抜（個別学部日程）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引制度なし。各学部個別日程",
+        faculties: ["文学部（英米文学科）","文学部（フランス文学科）","文学部（日本文学科）","文学部（史学科）","文学部（比較芸術学科）","教育人間科学部（教育学科）","教育人間科学部（心理学科）","経済学部（経済学科）","経済学部（現代経済デザイン学科）","法学部（法学科）","法学部（ヒューマンライツ学科）","経営学部（経営学科）","経営学部（マーケティング学科）","国際政治経済学部（国際政治学科）","国際政治経済学部（国際経済学科）","国際政治経済学部（国際コミュニケーション学科）","総合文化政策学部（総合文化政策学科）","理工学部（物理科学科）","理工学部（数理サイエンス学科）","理工学部（化学・生命科学科）","理工学部（電気電子工学科）","理工学部（機械創造工学科）","理工学部（経営システム工学科）","理工学部（情報テクノロジー学科）","社会情報学部（社会情報学科）","地球社会共生学部（地球社会共生学科）","コミュニティ人間科学部（コミュニティ人間科学科）"]
+      },
+      "共通テスト利用": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引制度なし",
+        faculties: ["文学部","教育人間科学部","経済学部","法学部","経営学部","国際政治経済学部","総合文化政策学部","理工学部","社会情報学部","地球社会共生学部","コミュニティ人間科学部"]
+      }
+    }
   }
 };
 
-function calcFee(univ, method, selected) {
+// カート：[{ univ, method, faculties }]
+let cart = [];
+let cur = { university: null, method: null, selected: [] };
+
+function fmt(n) { return n.toLocaleString('ja-JP') + '円'; }
+
+function calcRows(univ, method, selected) {
   const m = DB[univ].methods[method];
-  const count = selected.length;
-  if (count === 0) return [];
   return selected.map((f, i) => {
     let fee;
     if (i === 0) {
@@ -467,7 +504,170 @@ function calcFee(univ, method, selected) {
   });
 }
 
-let state = { university: null, method: null, selected: [] };
+function cartTotal() {
+  return cart.reduce((sum, entry) => {
+    return sum + calcRows(entry.univ, entry.method, entry.faculties).reduce((s, r) => s + r.fee, 0);
+  }, 0);
+}
+
+function cartCount() {
+  return cart.reduce((s, e) => s + e.faculties.length, 0);
+}
+
+function addToCart() {
+  if (!cur.university || !cur.method || cur.selected.length === 0) return;
+  const existing = cart.find(e => e.univ === cur.university && e.method === cur.method);
+  if (existing) {
+    cur.selected.forEach(f => { if (!existing.faculties.includes(f)) existing.faculties.push(f); });
+  } else {
+    cart.push({ univ: cur.university, method: cur.method, faculties: [...cur.selected] });
+  }
+  cur = { university: cur.university, method: null, selected: [] };
+  render();
+  setTimeout(() => {
+    document.getElementById('cart-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  render();
+}
+
+function removeFaculty(cartIdx, fac) {
+  cart[cartIdx].faculties = cart[cartIdx].faculties.filter(f => f !== fac);
+  if (cart[cartIdx].faculties.length === 0) cart.splice(cartIdx, 1);
+  render();
+}
+
+function resetAll() {
+  cart = [];
+  cur = { university: null, method: null, selected: [] };
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectUniv(u) {
+  cur = { university: u, method: null, selected: [] };
+  render();
+  setTimeout(() => document.getElementById('step2')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function selectMethod(m) {
+  cur.method = m;
+  cur.selected = [];
+  render();
+  setTimeout(() => document.getElementById('step3')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function toggleFaculty(f) {
+  const idx = cur.selected.indexOf(f);
+  if (idx >= 0) cur.selected.splice(idx, 1);
+  else cur.selected.push(f);
+  render();
+}
+
+function render() {
+  const app = document.getElementById('app');
+  const univs = Object.keys(DB);
+  let html = '';
+
+  if (cart.length > 0) {
+    const total = cartTotal();
+    const normalTotal = cartCount() * 35000;
+    const saved = normalTotal - total;
+    html += `<div class="result-card" id="cart-section">
+      <div class="result-header">&#x1F9FE; 受験リスト・合計金額</div>
+      <div class="result-body">`;
+    cart.forEach((entry, ci) => {
+      const rows = calcRows(entry.univ, entry.method, entry.faculties);
+      const subtotal = rows.reduce((s, r) => s + r.fee, 0);
+      html += `<div style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:700;">${entry.univ}</div>
+          <div style="font-size:11px;color:var(--text-secondary);">${entry.method}</div>
+        </div>`;
+      rows.forEach((r, ri) => {
+        html += `<div class="result-row">
+          <div class="result-row-label" style="display:flex;align-items:center;gap:6px;">
+            <button onclick="removeFaculty(${ci},'${r.name.replace(/'/g,"\\'")}')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:14px;padding:0;line-height:1;">&#x00D7;</button>
+            ${ri + 1}. ${r.name}
+          </div>
+          <div class="result-row-price">${fmt(r.fee)}</div>
+        </div>`;
+      });
+      html += `<div style="display:flex;justify-content:space-between;padding:6px 0 0;font-size:12px;color:var(--text-secondary);">
+        <span>${entry.faculties.length}出願 小計</span>
+        <span style="font-weight:700;color:var(--text);">${fmt(subtotal)}</span>
+      </div>
+      <button onclick="removeFromCart(${ci})" style="margin-top:8px;width:100%;padding:6px;font-size:11px;background:none;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;color:var(--text-secondary);">この大学を削除</button>
+      </div><div style="height:1px;background:var(--border);margin:8px 0 14px;"></div>`;
+    });
+    html += `<div class="result-total">
+        <div class="result-total-label">全${cartCount()}出願 合計</div>
+        <div class="result-total-price">${fmt(total)}</div>
+      </div>
+      ${saved > 0 ? `<div class="savings-bar">&#x1F389; 割引で ${fmt(saved)} 節約！</div>` : ''}
+      </div></div>
+    <button class="reset-btn" onclick="resetAll()">&#x21A9; 全部リセット</button>`;
+  }
+
+  const s1done = !!cur.university;
+  html += `<div class="step-card ${!s1done ? 'active' : ''}">
+    <div class="step-header">
+      <div class="step-badge ${s1done ? 'done' : 'active'}">${s1done ? '&#x2713;' : '1'}</div>
+      <div>
+        <div class="step-label">${cart.length > 0 ? '大学を追加する' : '大学を選ぶ'}</div>
+        ${s1done ? `<div class="step-value">${cur.university}</div>` : ''}
+      </div>
+    </div>
+    <div class="chip-wrap">
+      ${univs.map(u => `<button class="chip ${cur.university === u ? 'selected' : ''}" onclick="selectUniv('${u}')">${u}</button>`).join('')}
+    </div>
+  </div>`;
+
+  if (cur.university) {
+    const methods = Object.keys(DB[cur.university].methods);
+    const s2done = !!cur.method;
+    html += `<div class="step-card ${s2done ? '' : 'active'}" id="step2">
+      <div class="step-header">
+        <div class="step-badge ${s2done ? 'done' : 'active'}">${s2done ? '&#x2713;' : '2'}</div>
+        <div>
+          <div class="step-label">入試方式を選ぶ</div>
+          ${s2done ? `<div class="step-value">${cur.method}</div>` : ''}
+        </div>
+      </div>
+      <div class="chip-wrap">
+        ${methods.map(m => `<button class="chip ${cur.method === m ? 'selected' : ''}" onclick="selectMethod('${m.replace(/'/g, "\\'")}')"><span style="line-height:1.5">${m}</span></button>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  if (cur.method) {
+    const mData = DB[cur.university].methods[cur.method];
+    const s3done = cur.selected.length > 0;
+    html += `<div class="step-card ${s3done ? '' : 'active'}" id="step3">
+      <div class="step-header">
+        <div class="step-badge ${s3done ? 'done' : 'active'}">${s3done ? '&#x2713;' : '3'}</div>
+        <div>
+          <div class="step-label">学部・学科を選ぶ（複数選択可）</div>
+          ${s3done ? `<div class="step-value">${cur.selected.length}件選択中</div>` : ''}
+        </div>
+      </div>
+      <div class="note-bar">${mData.note}</div>
+      <div class="chip-wrap">
+        ${mData.faculties.map(f => `<button class="chip ${cur.selected.includes(f) ? 'selected' : ''}" onclick="toggleFaculty('${f.replace(/'/g, "\\'")}')"><span style="line-height:1.5">${f}</span></button>`).join('')}
+      </div>
+    </div>`;
+    if (s3done) {
+      html += `<button onclick="addToCart()" style="width:100%;padding:14px;background:var(--accent);color:var(--accent-fg);border:none;border-radius:var(--radius);font-size:14px;font-family:'Noto Sans JP',sans-serif;font-weight:700;cursor:pointer;margin-bottom:12px;">+ 受験リストに追加する</button>`;
+    }
+  }
+
+  app.innerHTML = html;
+}
+
+render();
 
 function selectUniv(u) {
   state = { university: u, method: null, selected: [] };
