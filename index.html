@@ -242,14 +242,22 @@
 
   .reset-btn:active { transform: scale(0.98); background: var(--border); }
 
-  .divider { height: 1px; background: var(--border); margin: 0 16px 14px; }
-
   footer {
     text-align: center;
     padding: 24px 20px;
     font-size: 11px;
     color: var(--text-tertiary);
     line-height: 1.8;
+  }
+
+  .group-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
   }
 </style>
 </head>
@@ -263,6 +271,14 @@
 <div class="main" id="app"></div>
 
 <footer>
+  <div style="margin-bottom:20px;">
+    <p style="font-size:13px;font-weight:700;color:#1A1916;margin-bottom:10px;">📅 製品版の通知を受け取る</p>
+    <p style="font-size:11px;color:#6B6860;margin-bottom:12px;">日程管理・書類チェック・カレンダー連携など<br>製品版リリース時にLINEでお知らせします</p>
+    <a href="https://lin.ee/R0rwEwt" target="_blank" style="display:inline-block;">
+      <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" style="border:none;">
+    </a>
+  </div>
+  <div style="height:1px;background:#E2E0D8;margin-bottom:16px;"></div>
   データは各大学公式サイト・マナビジョン（2026年度）に基づきます<br>
   最新情報は必ず各大学公式サイトでご確認ください
 </footer>
@@ -833,6 +849,436 @@ const DB = {
       }
     }
   },
+  "慶應義塾大学": {
+    methods: {
+      "一般選抜（文学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。1出願につき35,000円。共通テスト利用入試は一切実施しない。",
+        faculties: { "文学部": ["人文社会学科（2年次より17専攻に分かれる）"] }
+      },
+      "一般選抜（経済学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。A方式（数学重視）・B方式（歴史重視）の2方式あり。",
+        faculties: { "経済学部": ["経済学科（A方式・数学重視）","経済学科（B方式・歴史重視）"] }
+      },
+      "一般選抜（法学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。",
+        faculties: { "法学部": ["法律学科","政治学科"] }
+      },
+      "一般選抜（商学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。A方式（数学・地歴）・B方式（地歴・論文テスト）・C方式（英語4技能・数学）の3方式あり。",
+        faculties: { "商学部": ["商学科（A方式）","商学科（B方式）","商学科（C方式・英語4技能）"] }
+      },
+      "一般選抜（医学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。1次試験35,000円。",
+        faculties: { "医学部": ["医学科"] }
+      },
+      "一般選抜（理工学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。出願は学門単位。2年次より11学科に配属。",
+        faculties: { "理工学部": ["学門A（物理・医工系）","学門B（電子・情報系）","学門C（物質・生命系）","学門D（機械・システム系）","学門E（数理・情報系）"] }
+      },
+      "一般選抜（SFC・総合政策・環境情報）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。数学受験型・外国語受験型・数学外国語併用型の3方式あり。",
+        faculties: {
+          "総合政策学部": ["総合政策学科（数学受験型）","総合政策学科（外国語受験型）","総合政策学科（数学・外国語併用型）"],
+          "環境情報学部": ["環境情報学科（数学受験型）","環境情報学科（外国語受験型）","環境情報学科（数学・外国語併用型）"]
+        }
+      },
+      "一般選抜（看護医療学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。",
+        faculties: { "看護医療学部": ["看護学科"] }
+      },
+      "一般選抜（薬学部）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。",
+        faculties: { "薬学部": ["薬学科（6年制）","薬科学科（4年制）"] }
+      }
+    }
+  },
+  "芝浦工業大学": {
+    type: "shibaura",
+    methods: {
+      "一般選抜（全学統一・前期・後期）★割引あり": {
+        baseFee: 35000, extraFee: 15000,
+        note: "1学科目35,000円（B方式のみ30,000円）・2学科目以降15,000円。同一方式内での学科追加に適用。",
+        faculties: {
+          "工学部": ["機械工学課程","物質化学課程","電気電子工学課程","情報工学課程","デザイン工学課程","土木工学課程"],
+          "システム理工学部": ["電子情報システム学科","機械制御システム学科","環境システム学科","生命科学科","数理科学科"],
+          "デザイン工学部": ["デザイン工学科（UXコース）","デザイン工学科（プロダクトコース）"],
+          "建築学部": ["建築学科（APコース）","建築学科（SAコース）","建築学科（UAコース）"]
+        }
+      },
+      "共通テスト利用方式★4学科目以降0円": {
+        baseFee: 35000, extraFee: 15000,
+        note: "1学科目35,000円・2〜3学科目15,000円・4学科目以降0円！出願を増やすほどお得になる。",
+        faculties: {
+          "工学部": ["機械工学課程","物質化学課程","電気電子工学課程","情報工学課程","デザイン工学課程","土木工学課程"],
+          "システム理工学部": ["電子情報システム学科","機械制御システム学科","環境システム学科","生命科学科","数理科学科"],
+          "デザイン工学部": ["デザイン工学科（UXコース）","デザイン工学科（プロダクトコース）"],
+          "建築学部": ["建築学科（APコース）","建築学科（SAコース）","建築学科（UAコース）"]
+        }
+      }
+    }
+  },
+  "工学院大学": {
+    type: "kogakuin",
+    methods: {
+      "S日程・A日程（同日内の学科追加★割引あり）": {
+        baseFee: 33000, extraFee: 10000,
+        note: "1学科目33,000円・同日内2学科目以降+10,000円。別日程（A日程・B日程など）を追加する場合は+16,500円。",
+        faculties: {
+          "先進工学部": ["生命化学科","応用化学科","環境化学科","応用物理学科","機械理工学科"],
+          "工学部": ["機械工学科","機械システム工学科","電気電子工学科","共通課程"],
+          "建築学部": ["建築学科","建築デザイン学科","まちづくり学科"],
+          "情報学部": ["情報通信工学科","コンピュータ科学科","情報デザイン学科","システム数理学科"]
+        }
+      },
+      "共通テスト利用選抜（前期・後期）": {
+        baseFee: 17500, extraFee: 10000,
+        note: "1学科目17,500円・2学科目以降10,000円。",
+        faculties: {
+          "先進工学部": ["生命化学科","応用化学科","環境化学科","応用物理学科","機械理工学科"],
+          "工学部": ["機械工学科","機械システム工学科","電気電子工学科"],
+          "建築学部": ["建築学科","建築デザイン学科","まちづくり学科"],
+          "情報学部": ["情報通信工学科","コンピュータ科学科","情報デザイン学科","システム数理学科"]
+        }
+      }
+    }
+  },
+  "東京都市大学": {
+    type: "tcu",
+    methods: {
+      "一般選抜・前期（同日内★2・3学科目0円）": {
+        baseFee: 35000, extraFee: 18000,
+        note: "1学科目35,000円・同日内2学科目以降18,000円。同一スタイル内なら1日最大3学科まで併願可。別日追加は35,000円。",
+        faculties: {
+          "理工学部": ["機械工学科","機械システム工学科","電気電子通信工学科","医用工学科","応用化学科","原子力安全工学科","自然科学科"],
+          "建築都市デザイン学部": ["建築学科","都市工学科"],
+          "情報工学部": ["情報工学科","知能情報メディア学科"],
+          "環境学部": ["環境創生学科","海外環境移行学科"],
+          "メディア情報学部": ["社会メディア学科","情報システム学科"],
+          "デザイン・データ科学部": ["デザイン・データ科学科"],
+          "都市生活学部": ["都市生活学科"],
+          "人間科学部": ["児童学科"]
+        }
+      },
+      "共通テスト利用入試（前期・後期）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。3教科〜6教科型あり。6教科型は基準点超えで全員合格。",
+        faculties: {
+          "理工学部": ["機械工学科","機械システム工学科","電気電子通信工学科","医用工学科","応用化学科","原子力安全工学科","自然科学科"],
+          "建築都市デザイン学部": ["建築学科","都市工学科"],
+          "情報工学部": ["情報工学科","知能情報メディア学科"],
+          "環境学部": ["環境創生学科","海外環境移行学科"],
+          "メディア情報学部": ["社会メディア学科","情報システム学科"],
+          "デザイン・データ科学部": ["デザイン・データ科学科"],
+          "都市生活学部": ["都市生活学科"],
+          "人間科学部": ["児童学科"]
+        }
+      }
+    }
+  },
+  "東京電機大学": {
+    methods: {
+      "一般選抜・前期（同日内★割引あり）": {
+        baseFee: 33000, extraFee: 15000,
+        note: "1学科目33,000円・同日内2学科目以降15,000円。5日間の試験日から自由選択。1日最大4学科まで併願可。数学満点選抜方式・英語外部試験利用方式・情報系外部試験利用方式あり。",
+        faculties: {
+          "工学部": ["電気電子工学科","電子システム工学科","応用化学科","機械工学科","先端機械工学科"],
+          "工学部第二部（夜間主）": ["電気電子工学科","機械工学科","情報通信工学科"],
+          "未来科学部": ["建築学科","情報メディア学科","ロボット・メカトロニクス学科"],
+          "システムデザイン工学部": ["情報システム工学科","デザイン工学科"],
+          "理工学部（埼玉鳩山）": ["理工学科（理学系）","理工学科（生命科学系）","理工学科（情報システムデザイン学系）","理工学科（電子工学系）","理工学科（機械工学系）","理工学科（建築・都市環境学系）"]
+        }
+      },
+      "共通テスト利用選抜（前期・後期）": {
+        baseFee: 15000, extraFee: 10000,
+        note: "1学科目15,000円・2学科目以降10,000円。3教科型・4教科型あり。",
+        faculties: {
+          "工学部": ["電気電子工学科","電子システム工学科","応用化学科","機械工学科","先端機械工学科"],
+          "未来科学部": ["建築学科","情報メディア学科","ロボット・メカトロニクス学科"],
+          "システムデザイン工学部": ["情報システム工学科","デザイン工学科"],
+          "理工学部（埼玉鳩山）": ["理工学科（理学系）","理工学科（生命科学系）","理工学科（情報システムデザイン学系）","理工学科（電子工学系）","理工学科（機械工学系）","理工学科（建築・都市環境学系）"]
+        }
+      }
+    }
+  },
+  "成蹊大学": {
+    methods: {
+      "A方式（3教科型学部個別入試）": {
+        baseFee: 35000, extraFee: 25000,
+        note: "2出願目以降一律10,000円引き。複数方式・学部を同時出願すると全体から割引が適用される。",
+        faculties: {
+          "経済学部": ["経済現代学科"],
+          "経営学部": ["総合経営学科"],
+          "法学部": ["法律学科","政治学科"],
+          "文学部": ["英語英米文学科","日本文学科","国際文化学科"],
+          "理工学部": ["データ数理専攻","コンピュータ科学専攻","機械システム専攻","電気電子専攻","応用化学専攻"]
+        }
+      },
+      "E方式（2教科型全学部統一入試）": {
+        baseFee: 35000, extraFee: 25000,
+        note: "2出願目以降一律10,000円引き。全学部同一日程で文系は最大4学部併願可能。",
+        faculties: {
+          "経済学部": ["経済現代学科"],
+          "経営学部": ["総合経営学科"],
+          "法学部": ["法律学科","政治学科"],
+          "文学部": ["英語英米文学科","日本文学科","国際文化学科"],
+          "理工学部": ["データ数理専攻","コンピュータ科学専攻","機械システム専攻","電気電子専攻","応用化学専攻"]
+        }
+      },
+      "G方式（共通テスト併用）": {
+        baseFee: 35000, extraFee: 25000,
+        note: "2出願目以降一律10,000円引き。共通テスト＋成蹊独自試験の組み合わせで判定。",
+        faculties: {
+          "経済学部": ["経済現代学科"],
+          "経営学部": ["総合経営学科"],
+          "法学部": ["法律学科","政治学科"],
+          "文学部": ["英語英米文学科","日本文学科","国際文化学科"],
+          "理工学部": ["データ数理専攻","コンピュータ科学専攻","機械システム専攻","電気電子専攻","応用化学専攻"]
+        }
+      },
+      "P方式（国公立併願アシスト入試）": {
+        baseFee: 35000, extraFee: 25000,
+        note: "2出願目以降一律10,000円引き。共通テスト＋独自試験。国公立大志望者向け。",
+        faculties: {
+          "経済学部": ["経済現代学科"],
+          "経営学部": ["総合経営学科"],
+          "法学部": ["法律学科","政治学科"],
+          "文学部": ["英語英米文学科","日本文学科","国際文化学科"],
+          "理工学部": ["データ数理専攻","コンピュータ科学専攻","機械システム専攻","電気電子専攻","応用化学専攻"]
+        }
+      },
+      "共通テスト利用方式": {
+        baseFee: 15000, extraFee: 5000,
+        note: "2出願目以降一律10,000円引き。個別試験なし・共通テストの得点のみで判定（前期・後期あり）。",
+        faculties: {
+          "経済学部": ["経済現代学科"],
+          "経営学部": ["総合経営学科"],
+          "法学部": ["法律学科","政治学科"],
+          "文学部": ["英語英米文学科","日本文学科","国際文化学科"],
+          "理工学部": ["データ数理専攻","コンピュータ科学専攻","機械システム専攻","電気電子専攻","応用化学専攻"]
+        }
+      }
+    }
+  },
+  "成城大学": {
+    methods: {
+      "S方式（全学部統一入試）": {
+        baseFee: 30000, extraFee: 10000,
+        note: "1出願目30,000円・2出願目以降+10,000円。全学部の学科を自由に併願可能。複数方式の同時出願でさらに5,000円割引あり。",
+        faculties: {
+          "経済学部": ["経済学科","経営学科"],
+          "文芸学部": ["国文学科","英文学科","芸術学科","文化史学科","マスコミ学科","ヨーロッパ文化学科"],
+          "法学部": ["法律学科"],
+          "社会イノベーション学部": ["政策イノベーション学科","心理社会学科"]
+        }
+      },
+      "A方式（学部別入試）": {
+        baseFee: 35000, extraFee: 30000,
+        note: "1出願目35,000円・2出願目以降+30,000円。同一学科の2教科型と3教科型の併願は+10,000円。複数方式の同時出願でさらに5,000円割引あり。",
+        faculties: {
+          "経済学部": ["経済学科（3教科型）","経済学科（2教科型）","経営学科（3教科型）","経営学科（2教科型）"],
+          "文芸学部": ["国文学科","英文学科","芸術学科","文化史学科","マスコミ学科","ヨーロッパ文化学科"],
+          "法学部": ["法律学科（3教科型）","法律学科（2教科型）"],
+          "社会イノベーション学部": ["政策イノベーション学科","心理社会学科"]
+        }
+      },
+      "B方式（共通テスト利用・前期）": {
+        baseFee: 15000, extraFee: 10000,
+        note: "1出願目15,000円・2出願目以降+10,000円。個別試験なし。複数方式の同時出願でさらに5,000円割引あり。",
+        faculties: {
+          "経済学部": ["経済学科","経営学科"],
+          "文芸学部": ["国文学科","英文学科","芸術学科","文化史学科","マスコミ学科","ヨーロッパ文化学科"],
+          "法学部": ["法律学科"],
+          "社会イノベーション学部": ["政策イノベーション学科","心理社会学科"]
+        }
+      },
+      "N方式（国公立大学併願型共通テスト利用）": {
+        baseFee: 5000, extraFee: 5000,
+        note: "1出願5,000円。S方式またはA方式と同時出願で実質0円になります。割引なし（B方式との組み合わせも割引対象外）。",
+        faculties: {
+          "経済学部": ["経済学科","経営学科"],
+          "文芸学部": ["国文学科","英文学科","芸術学科","文化史学科","マスコミ学科","ヨーロッパ文化学科"],
+          "法学部": ["法律学科"],
+          "社会イノベーション学部": ["政策イノベーション学科","心理社会学科"]
+        }
+      }
+    }
+  },
+  "明治学院大学": {
+    methods: {
+      "全学部日程（割引あり）": {
+        baseFee: 35000, extraFee: 20000,
+        note: "1志願目35,000円・2志願目20,000円・3〜4志願目各10,000円。全学部同一日程・同一問題。3教科型と英語外部検定試験利用型あり。各型2学科まで併願可（合計最大4学科）。一括出願時のみ割引適用。",
+        faculties: {
+          "文学部": ["英文学科","フランス文学科","芸術学科"],
+          "経済学部": ["経済学科","商業学科","国際経営学科"],
+          "社会学部": ["社会学科","社会福祉学科"],
+          "法学部": ["法律学科","消費情報環境法学科","グローバル法学科"],
+          "国際学部": ["国際学科"],
+          "心理学部": ["心理学科","教育発達学科"],
+          "情報数理学部": ["情報数理学科"]
+        }
+      },
+      "A日程（学部個別入試）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。1出願につき35,000円。学部・学科ごとの個別日程。英語外部検定試験利用型あり。",
+        faculties: {
+          "文学部": ["英文学科","フランス文学科","芸術学科"],
+          "経済学部": ["経済学科","商業学科","国際経営学科"],
+          "社会学部": ["社会学科","社会福祉学科"],
+          "法学部": ["法律学科","消費情報環境法学科","グローバル法学科"],
+          "国際学部": ["国際学科"],
+          "心理学部": ["心理学科","教育発達学科"],
+          "情報数理学部": ["情報数理学科"]
+        }
+      },
+      "B日程（後期型個別入試）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。3月実施。一部の学部・学科で小論文や面接等を課す場合あり。",
+        faculties: {
+          "文学部": ["英文学科","フランス文学科","芸術学科"],
+          "経済学部": ["経済学科","商業学科","国際経営学科"],
+          "社会学部": ["社会学科","社会福祉学科"],
+          "法学部": ["法律学科","消費情報環境法学科","グローバル法学科"],
+          "国際学部": ["国際学科"],
+          "心理学部": ["心理学科","教育発達学科"],
+          "情報数理学部": ["情報数理学科"]
+        }
+      },
+      "共通テスト利用入試": {
+        baseFee: 15000, extraFee: 10000,
+        note: "1学科目15,000円・2学科目以降+10,000円（5,000円引き）。個別試験なし（前期・後期あり）。",
+        faculties: {
+          "文学部": ["英文学科","フランス文学科","芸術学科"],
+          "経済学部": ["経済学科","商業学科","国際経営学科"],
+          "社会学部": ["社会学科","社会福祉学科"],
+          "法学部": ["法律学科","消費情報環境法学科","グローバル法学科"],
+          "国際学部": ["国際学科"],
+          "心理学部": ["心理学科","教育発達学科"],
+          "情報数理学部": ["情報数理学科"]
+        }
+      }
+    }
+  },
+  "獨協大学": {
+    type: "dokkyo",
+    methods: {
+      "B方式（全学統一入試）★割引あり": {
+        baseFee: 35000,
+        note: "1学科目35,000円・2〜3学科目追加+10,000円（3学科で45,000円）・4学科目以降+5,000円/学科。外検＋方式は同一学科に無料（0円）で同時出願可能。",
+        faculties: {
+          "外国語学部": ["ドイツ語学科","英語学科","フランス語学科","交流文化学科"],
+          "国際教養学部": ["言語文化学科","国際関係学科"],
+          "経済学部": ["経済学科","経営学科","国際環境経済学科"],
+          "法学部": ["法律学科","国際関係法学科","総合政策学科"]
+        }
+      },
+      "A方式（学部学科別個別入試）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。1出願につき35,000円。指定された日に実施する3科目型（一部2科目）の個別入試。",
+        faculties: {
+          "外国語学部": ["ドイツ語学科","英語学科","フランス語学科","交流文化学科"],
+          "国際教養学部": ["言語文化学科","国際関係学科"],
+          "経済学部": ["経済学科","経営学科","国際環境経済学科"],
+          "法学部": ["法律学科","国際関係法学科","総合政策学科"]
+        }
+      },
+      "C方式（共通テスト利用）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。個別試験なし（前期・中期・後期あり）。",
+        faculties: {
+          "外国語学部": ["ドイツ語学科","英語学科","フランス語学科","交流文化学科"],
+          "国際教養学部": ["言語文化学科","国際関係学科"],
+          "経済学部": ["経済学科","経営学科","国際環境経済学科"],
+          "法学部": ["法律学科","国際関係法学科","総合政策学科"]
+        }
+      },
+      "共通テスト併用方式": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。共通テストの得点＋獨協大学の個別試験（英語など）を組み合わせて判定。",
+        faculties: {
+          "外国語学部": ["ドイツ語学科","英語学科","フランス語学科","交流文化学科"],
+          "国際教養学部": ["言語文化学科","国際関係学科"],
+          "経済学部": ["経済学科","経営学科","国際環境経済学科"],
+          "法学部": ["法律学科","国際関係法学科","総合政策学科"]
+        }
+      }
+    }
+  },
+  "國學院大學": {
+    type: "kokugakuin",
+    methods: {
+      "A日程＋V方式（応援割）": {
+        baseFee: 35000, vFee: 15000,
+        note: "【応援割】A日程（35,000円）とV方式（15,000円）を同時出願するとV方式が0円！A日程単独は35,000円・V方式単独は15,000円。",
+        faculties: {
+          "文学部": ["日本文学科","中国文学科","外国語文化学科","史学科","哲学科"],
+          "神道文化学部": ["神道文化学科"],
+          "法学部": ["法律学科"],
+          "経済学部": ["経済学科","経営学科"],
+          "人間開発学部": ["初等教育学科","健康体育学科","子ども支援学科"],
+          "観光まちづくり学部": ["観光まちづくり学科"]
+        }
+      },
+      "B日程（得意科目重視型）": {
+        baseFee: 35000, extraFee: 35000,
+        note: "割引なし。高得点科目の配点を2倍にして判定。",
+        faculties: {
+          "文学部": ["日本文学科","中国文学科","外国語文化学科","史学科","哲学科"],
+          "神道文化学部": ["神道文化学科"],
+          "法学部": ["法律学科"],
+          "経済学部": ["経済学科","経営学科"],
+          "人間開発学部": ["初等教育学科","健康体育学科","子ども支援学科"],
+          "観光まちづくり学部": ["観光まちづくり学科"]
+        }
+      },
+      "V方式（共通テスト利用）単独": {
+        baseFee: 15000, extraFee: 15000,
+        note: "割引なし。1出願15,000円。A日程と同時出願する場合は「A日程＋V方式（応援割）」を選んでください。",
+        faculties: {
+          "文学部": ["日本文学科","中国文学科","外国語文化学科","史学科","哲学科"],
+          "神道文化学部": ["神道文化学科"],
+          "法学部": ["法律学科"],
+          "経済学部": ["経済学科","経営学科"],
+          "人間開発学部": ["初等教育学科","健康体育学科","子ども支援学科"],
+          "観光まちづくり学部": ["観光まちづくり学科"]
+        }
+      }
+    }
+  },
+  "武蔵大学": {
+    type: "musashi",
+    methods: {
+      "全学部統一方式（2科目型）＋個別学部日程（3科目型）": {
+        baseFee: 35000, extraFee: 10000,
+        note: "同一学部内は何学科（最大3つ）出願しても35,000円！2学部目以降は+10,000円/学部。共通テスト前期と同時出願で共通テスト分が半額（7,500円）になります。",
+        faculties: {
+          "経済学部": ["経済学科","経営学科","金融学科"],
+          "人文学部": ["英語英米文化学科","ヨーロッパ文化学科","日本・東アジア文化学科"],
+          "社会学部": ["社会学科","メディア社会学科"],
+          "国際教養学部": ["国際教養学科（経済経営学専攻）","国際教養学科（グローバルスタディーズ専攻）"]
+        }
+      },
+      "共通テスト利用方式（前期・後期）": {
+        baseFee: 15000, extraFee: 15000,
+        note: "1出願15,000円。一般方式と同時出願で半額（7,500円）になります。個別試験なし。",
+        faculties: {
+          "経済学部": ["経済学科","経営学科","金融学科"],
+          "人文学部": ["英語英米文化学科","ヨーロッパ文化学科","日本・東アジア文化学科"],
+          "社会学部": ["社会学科","メディア社会学科"],
+          "国際教養学部": ["国際教養学科（経済経営学専攻）","国際教養学科（グローバルスタディーズ専攻）"]
+        }
+      }
+    }
+  },
   "学習院大学": {
     methods: {
       "コア試験（一般選抜）": {
@@ -865,6 +1311,191 @@ const DB = {
           "経済学部": ["経済学科","経営学科"],
           "文学部": ["哲学科","史学科","日本語日本文学科","英語英米文化学科","フランス語圏文化学科","ドイツ語圏文化学科","心理学科","教育学科"],
           "理学部": ["物理学科","化学科","数学科","生命科学科"]
+        }
+      }
+    }
+  },
+  "大東文化大学": {
+    type: "daito",
+    methods: {
+      "一般選抜（全学部統一・3教科A方式）★グリーン出願": {
+        baseFee: 35000, extraFee: 0,
+        note: "【グリーン出願】1出願目35,000円・2出願目0円（無料）・3出願目以降+10,000円。同一学科の独自型とベスト2型を併願すると2つ目が0円！",
+        faculties: {
+          "文学部": ["日本文学科","英米文学科","中国文学科","教育学科"],
+          "外国語学部": ["中国語学科","英語学科","日本語学科"],
+          "国際関係学部": ["国際文化学科","国際関係学科"],
+          "法学部": ["法律学科"],
+          "政治経済学部": ["政治学科","経済学科"],
+          "経営学部": ["経営学科"],
+          "社会学部": ["社会学科"],
+          "スポーツ・健康科学部": ["スポーツ科学科","健康科学科"]
+        }
+      },
+      "共通テスト利用入試（前期・中期・後期）★グリーン出願": {
+        baseFee: 15000, extraFee: 0,
+        note: "【グリーン出願】1学科目15,000円・2学科目0円（無料）・3学科目以降+5,000円。",
+        faculties: {
+          "文学部": ["日本文学科","英米文学科","中国文学科","教育学科"],
+          "外国語学部": ["中国語学科","英語学科","日本語学科"],
+          "国際関係学部": ["国際文化学科","国際関係学科"],
+          "法学部": ["法律学科"],
+          "政治経済学部": ["政治学科","経済学科"],
+          "経営学部": ["経営学科"],
+          "社会学部": ["社会学科"],
+          "スポーツ・健康科学部": ["スポーツ科学科","健康科学科"]
+        }
+      }
+    }
+  },
+  "東海大学": {
+    type: "tokai",
+    methods: {
+      "一般選抜・全学部統一（フラット併願★上限55,000円）": {
+        baseFee: 35000, extraFee: 0,
+        note: "【フラット併願割】同一試験日は何学科でも35,000円！2試験日以上（ステップ併願）は55,000円が上限。どれだけ重ねても55,000円以上にならない。",
+        faculties: {
+          "文学部": ["文明学科","アジア文明学科","ヨーロッパ文明学科","歴史学科","日本文学科","英語文化コミュニケーション学科"],
+          "文化社会学部": ["文化社会学科","広報メディア学科","出版・編集学科"],
+          "政治経済学部": ["政治学科","経済学科"],
+          "法学部": ["法律学科"],
+          "経営学部": ["経営学科","観光ビジネス学科"],
+          "国際学部": ["国際学科"],
+          "情報通信学部": ["情報通信学科","組込みシステム学科"],
+          "理学部": ["数学科","情報数理学科","物理学科","化学科"],
+          "工学部": ["機械工学科","機械システム工学科","電気電子工学科","応用化学科","土木工学科","建築学科","精密工学科","生命化学科","医工学科","総合技術マネジメント学科"],
+          "情報理工学部": ["情報理工学科","コンピュータ応用工学科"],
+          "農学部": ["農学科","応用植物科学科","農業経済学科","バイオサイエンス学科","食生命科学科"],
+          "海洋学部": ["水産学科","海洋生物学科","海洋地球科学科","航海学科","海洋理工学科"],
+          "健康学部": ["健康マネジメント学科"],
+          "体育学部": ["体育学科","武道学科","生涯スポーツ学科","スポーツ・レジャーマネジメント学科","競技スポーツ学科"],
+          "人文学部": ["人文学科"],
+          "観光学部": ["観光学科"],
+          "児童教育学部": ["児童教育学科"]
+        }
+      },
+      "共通テスト利用選抜（一律15,000円）": {
+        baseFee: 15000, extraFee: 0,
+        note: "単願〜最大6併願まで何学科でも一律15,000円！割引なしのフラット料金。",
+        faculties: {
+          "文学部": ["文明学科","アジア文明学科","ヨーロッパ文明学科","歴史学科","日本文学科","英語文化コミュニケーション学科"],
+          "政治経済学部": ["政治学科","経済学科"],
+          "法学部": ["法律学科"],
+          "経営学部": ["経営学科","観光ビジネス学科"],
+          "国際学部": ["国際学科"],
+          "理学部": ["数学科","情報数理学科","物理学科","化学科"],
+          "工学部": ["機械工学科","機械システム工学科","電気電子工学科","応用化学科","土木工学科","建築学科","精密工学科","生命化学科"],
+          "情報理工学部": ["情報理工学科","コンピュータ応用工学科"],
+          "農学部": ["農学科","応用植物科学科","農業経済学科","バイオサイエンス学科","食生命科学科"],
+          "健康学部": ["健康マネジメント学科"],
+          "体育学部": ["体育学科","武道学科","生涯スポーツ学科","スポーツ・レジャーマネジメント学科","競技スポーツ学科"]
+        }
+      }
+    }
+  },
+  "亜細亜大学": {
+    methods: {
+      "全学統一入試（前期・中期・後期）★割引あり": {
+        baseFee: 32000, extraFee: 15000,
+        note: "1出願目32,000円・2出願目以降+15,000円。前期・中期・後期をまたいでの割引は不可。同一期間内のみ適用。",
+        faculties: {
+          "法学部": ["法律学科"],
+          "経営学部": ["経営学科","ホスピタリティ・マネジメント学科","データサイエンス学科"],
+          "経済学部": ["経済学科","国際経済学科"],
+          "国際関係学部": ["国際関係学科","多文化コミュニケーション学科"],
+          "都市創造学部": ["都市創造学科"],
+          "法学部": ["法律学科"]
+        }
+      },
+      "一般入試（学科別・個別試験）": {
+        baseFee: 37000, extraFee: 5000,
+        note: "同一学科の3教科型と3教科型〈ベスト2〉を同時併願すると2つ目が5,000円（32,000円割引）。",
+        faculties: {
+          "法学部": ["法律学科（3教科型）","法律学科（3教科型ベスト2）"],
+          "経営学部": ["経営学科（3教科型）","経営学科（3教科型ベスト2）","ホスピタリティ・マネジメント学科（3教科型）","データサイエンス学科（2教科型）"],
+          "経済学部": ["経済学科（3教科型）","経済学科（3教科型ベスト2）","国際経済学科（3教科型）"],
+          "国際関係学部": ["国際関係学科（3教科型）","多文化コミュニケーション学科（3教科型）"],
+          "都市創造学部": ["都市創造学科（3教科型）"]
+        }
+      },
+      "共通テスト利用入試（前期・後期）": {
+        baseFee: 14000, extraFee: 14000,
+        note: "2併願まで14,000円・3併願目以降+10,000円。前期・後期をまたいでの割引は不可。",
+        faculties: {
+          "法学部": ["法律学科"],
+          "経営学部": ["経営学科","ホスピタリティ・マネジメント学科","データサイエンス学科"],
+          "経済学部": ["経済学科","国際経済学科"],
+          "国際関係学部": ["国際関係学科","多文化コミュニケーション学科"],
+          "都市創造学部": ["都市創造学科"]
+        }
+      }
+    }
+  },
+  "帝京大学": {
+    type: "teikyo",
+    methods: {
+      "一般選抜（試験日自由選択制）★割引あり": {
+        baseFee: 35000, extraFee: 20000,
+        note: "1日目35,000円・2日目以降+20,000円。複数日受験して最高得点の日を採用可。試験当日に科目を選択できる自由度の高いシステム。",
+        faculties: {
+          "法学部": ["法律学科"],
+          "経済学部": ["経済学科","経営学科","観光経営学科"],
+          "文学部": ["日本文化学科","史学科","社会学科","心理学科","教育学科"],
+          "外国語学部": ["外国語学科（英語コース）","外国語学科（中国語コース）"],
+          "教育学部": ["教育学科"],
+          "理工学部": ["機械システム工学科","航空宇宙工学科","精密工学科","情報電子工学科","バイオサイエンス学科","環境学科"],
+          "医療技術学部": ["診療放射線学科","臨床検査学科","視能訓練学科","柔道整復学科","スポーツ医療学科"],
+          "薬学部": ["薬学科（6年制）"],
+          "福岡医療技術学部": ["診療放射線学科","臨床検査学科","作業療法学科","理学療法学科","医療福祉学科"]
+        }
+      },
+      "一般選抜（医学部医学科）": {
+        baseFee: 60000, extraFee: 30000,
+        note: "1日目60,000円・2日目以降+30,000円。1次試験（英語・数学・理科）＋2次試験（課題作文・面接）。",
+        faculties: { "医学部": ["医学科"] }
+      },
+      "共通テスト利用方式": {
+        baseFee: 15000, extraFee: 15000,
+        note: "1出願15,000円。医学部の共通テスト5科目方式（20,000円）は3科目方式（30,000円）との同時出願が必須。",
+        faculties: {
+          "法学部": ["法律学科"],
+          "経済学部": ["経済学科","経営学科","観光経営学科"],
+          "文学部": ["日本文化学科","史学科","社会学科","心理学科","教育学科"],
+          "外国語学部": ["外国語学科"],
+          "理工学部": ["機械システム工学科","航空宇宙工学科","精密工学科","情報電子工学科","バイオサイエンス学科","環境学科"],
+          "医療技術学部": ["診療放射線学科","臨床検査学科","視能訓練学科","柔道整復学科","スポーツ医療学科"],
+          "薬学部": ["薬学科（6年制）"]
+        }
+      }
+    }
+  },
+  "国士舘大学": {
+    type: "kokushikan",
+    methods: {
+      "一般選抜（デリバリー・前期・中期・後期）★+5,000円で併願し放題": {
+        baseFee: 35000, extraFee: 0,
+        note: "1出願35,000円・複数出願（2つ以上）は一律40,000円（+5,000円で何学科でも併願し放題）！各期間内のみ適用。",
+        faculties: {
+          "政経学部": ["政治行政学科","経済学科"],
+          "体育学部": ["体育学科","こどもスポーツ教育学科","武道学科"],
+          "理工学部": ["機械工学系","電情理工学系","建築学系","まちづくり学系"],
+          "法学部": ["法律学科"],
+          "文学部": ["教育学科","史学地理学科","哲学科"],
+          "21世紀アジア学部": ["21世紀アジア学科"],
+          "経営学部": ["経営学科"]
+        }
+      },
+      "共通テスト利用選抜（Ⅰ期・Ⅱ期）★+5,000円で併願し放題": {
+        baseFee: 15000, extraFee: 0,
+        note: "1出願15,000円・複数出願は一律20,000円（+5,000円で何学科でも併願し放題）！",
+        faculties: {
+          "政経学部": ["政治行政学科","経済学科"],
+          "体育学部": ["体育学科","こどもスポーツ教育学科","武道学科"],
+          "理工学部": ["機械工学系","電情理工学系","建築学系","まちづくり学系"],
+          "法学部": ["法律学科"],
+          "文学部": ["教育学科","史学地理学科","哲学科"],
+          "21世紀アジア学部": ["21世紀アジア学科"],
+          "経営学部": ["経営学科"]
         }
       }
     }
@@ -1002,6 +1633,276 @@ function isAogakuAll(univ, method) { return univ === '青山学院大学' && met
 function isAogakuInd(univ, method) { return univ === '青山学院大学' && method === '一般選抜（個別学部日程）'; }
 function isNDUCombined(univ, method) { return univ === '日本大学' && method === 'A個別方式 ＋ N全学統一方式（連動）'; }
 function isToyoGeneral(univ, method) { return univ === '東洋大学' && method === '一般選抜（前期・4日間）'; }
+// 大東文化大学 グリーン出願（2つ目0円）
+function isDaitoGreen(univ, method) {
+  return univ === '大東文化大学';
+}
+// 東海大学 フラット併願（上限55,000円）
+function isTokaiFlat(univ, method) {
+  return univ === '東海大学' && method === '一般選抜・全学部統一（フラット併願★上限55,000円）';
+}
+function isTokaiCommon(univ, method) {
+  return univ === '東海大学' && method === '共通テスト利用選抜（一律15,000円）';
+}
+// 国士舘大学 +5,000円で併願し放題
+function isKokushikanFlat(univ, method) {
+  return univ === '国士舘大学';
+}
+
+function isDokkyoB(univ, method) { return univ === '獨協大学' && method === 'B方式（全学統一入試）★割引あり'; }
+function isKokugakuinAV(univ, method) { return univ === '國學院大學' && method === 'A日程＋V方式（応援割）'; }
+function isMusashiGeneral(univ, method) { return univ === '武蔵大学' && method === '全学部統一方式（2科目型）＋個別学部日程（3科目型）'; }
+
+// ── 獨協大学 B方式 state ───────────────────────────
+// dokkyoSelections = { "外国語学部_英語学科": { normal: true, english: true } }
+var dokkyoState = { expandedFaculty: null, selections: {} };
+function resetDokkyoState() { dokkyoState = { expandedFaculty: null, selections: {} }; }
+
+function toggleDokkyoExpand(faculty) {
+  dokkyoState.expandedFaculty = dokkyoState.expandedFaculty === faculty ? null : faculty;
+  render();
+}
+
+function toggleDokkyoMethod(faculty, dept, method) {
+  var key = faculty + '_' + dept;
+  if (!dokkyoState.selections[key]) dokkyoState.selections[key] = { normal: false, english: false };
+  dokkyoState.selections[key][method] = !dokkyoState.selections[key][method];
+  var s = dokkyoState.selections[key];
+  if (!s.normal && !s.english) delete dokkyoState.selections[key];
+  render();
+}
+
+function dokkyoFlatSelected() {
+  var result = [];
+  var count = 0;
+  Object.entries(dokkyoState.selections).forEach(function(entry) {
+    var key = entry[0], sel = entry[1];
+    var parts = key.split('_');
+    var faculty = parts[0], dept = parts.slice(1).join('_');
+    if (sel.normal) {
+      count++;
+      var fee = count === 1 ? 35000 : count <= 3 ? 5000 : 5000;
+      result.push({ name: faculty + '（' + dept + '）', fee: fee, count: count });
+    }
+    if (sel.english) {
+      result.push({ name: faculty + '（' + dept + '）［外検＋：0円］', fee: 0 });
+    }
+  });
+  return result;
+}
+
+function dokkyoCalcFees() {
+  var normalCount = 0;
+  var items = [];
+  Object.entries(dokkyoState.selections).forEach(function(entry) {
+    var key = entry[0], sel = entry[1];
+    var parts = key.split('_');
+    var faculty = parts[0], dept = parts.slice(1).join('_');
+    if (sel.normal) {
+      normalCount++;
+      var fee;
+      if (normalCount === 1) fee = 35000;
+      else if (normalCount <= 3) fee = 5000;
+      else fee = 5000;
+      items.push(faculty + '（' + dept + '）');
+    }
+    if (sel.english) {
+      items.push(faculty + '（' + dept + '）［外検＋：0円］');
+    }
+  });
+  return items;
+}
+
+function renderDokkyoUI(mData) {
+  var html = '<div style="padding:0 14px 14px;">';
+  html += '<div style="margin:0 0 12px;padding:10px 12px;background:#E8F5E9;border:1px solid #81C784;border-radius:8px;font-size:11px;color:#1B5E20;line-height:1.7;">';
+  html += '🎉 <strong>獨協大学B方式の割引ルール</strong><br>';
+  html += '1学科目：35,000円 / 2〜3学科目：+5,000円 / 4学科目以降：+5,000円<br>';
+  html += '外検＋方式：同一学科に<strong>無料（0円）</strong>で同時出願可能！';
+  html += '</div>';
+
+  var normalCount = 0;
+  Object.values(dokkyoState.selections).forEach(function(s){ if(s.normal) normalCount++; });
+
+  Object.entries(mData.faculties).forEach(function(entry) {
+    var faculty = entry[0], depts = entry[1];
+    var isExpanded = dokkyoState.expandedFaculty === faculty;
+    var selCount = depts.filter(function(d){ return dokkyoState.selections[faculty + '_' + d]; }).length;
+    var bg = isExpanded ? 'var(--accent)' : 'var(--bg)';
+    var fg = isExpanded ? 'var(--accent-fg)' : 'var(--text)';
+    var bd = isExpanded ? 'var(--accent)' : 'var(--border-strong)';
+    html += '<div style="margin-bottom:8px;">';
+    html += '<button data-action="dokkyoExpand" data-val="' + escA(faculty) + '" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:' + bg + ';color:' + fg + ';border:1px solid ' + bd + ';border-radius:8px;font-size:13px;cursor:pointer;text-align:left;">';
+    html += '<span style="font-weight:500;">' + faculty + '</span>';
+    html += '<span style="font-size:11px;opacity:0.8;">' + (selCount > 0 ? selCount + '学科 ' : '') + (isExpanded ? '▲' : '▶') + '</span>';
+    html += '</button>';
+    if (isExpanded) {
+      html += '<div style="padding:8px 0 0 8px;">';
+      depts.forEach(function(d) {
+        var key = faculty + '_' + d;
+        var sel = dokkyoState.selections[key] || { normal: false, english: false };
+        html += '<div style="margin-bottom:8px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">';
+        html += '<div style="font-size:12px;font-weight:500;margin-bottom:8px;">' + d + '</div>';
+        html += '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
+        html += '<button class="chip ' + (sel.normal ? 'selected' : '') + '" data-action="dokkyoMethod" data-val="' + escA(faculty) + '" data-val2="' + escA(d) + '" data-val3="normal">通常方式</button>';
+        html += '<button class="chip ' + (sel.english ? 'selected' : '') + '" data-action="dokkyoMethod" data-val="' + escA(faculty) + '" data-val2="' + escA(d) + '" data-val3="english">外検＋ ' + (sel.normal ? '<span style="color:#4CAF50;font-weight:700;">0円🎉</span>' : '0円') + '</button>';
+        html += '</div></div>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+// ── 國學院大學 応援割 state ──────────────────────────
+// kokugakuinSelections = { "文学部_日本文学科": { a: true, v: true } }
+var kokugakuinState = { expandedFaculty: null, selections: {} };
+function resetKokugakuinState() { kokugakuinState = { expandedFaculty: null, selections: {} }; }
+
+function toggleKokugakuinExpand(faculty) {
+  kokugakuinState.expandedFaculty = kokugakuinState.expandedFaculty === faculty ? null : faculty;
+  render();
+}
+
+function toggleKokugakuinMethod(faculty, dept, method) {
+  var key = faculty + '_' + dept;
+  if (!kokugakuinState.selections[key]) kokugakuinState.selections[key] = { a: false, v: false };
+  kokugakuinState.selections[key][method] = !kokugakuinState.selections[key][method];
+  var s = kokugakuinState.selections[key];
+  if (!s.a && !s.v) delete kokugakuinState.selections[key];
+  render();
+}
+
+function kokugakuinFlatSelected() {
+  var result = [];
+  Object.entries(kokugakuinState.selections).forEach(function(entry) {
+    var key = entry[0], sel = entry[1];
+    var parts = key.split('_');
+    var faculty = parts[0], dept = parts.slice(1).join('_');
+    var hasBoth = sel.a && sel.v;
+    if (sel.a) result.push(faculty + '（' + dept + '）［A日程：35,000円］');
+    if (sel.v) result.push(faculty + '（' + dept + '）［V方式：' + (hasBoth ? '0円（応援割）' : '15,000円') + '］');
+  });
+  return result;
+}
+
+function renderKokugakuinUI(mData) {
+  var html = '<div style="padding:0 14px 14px;">';
+  html += '<div style="margin:0 0 12px;padding:10px 12px;background:#E8F5E9;border:1px solid #81C784;border-radius:8px;font-size:11px;color:#1B5E20;line-height:1.7;">';
+  html += '🎉 <strong>國學院大學 応援割</strong><br>';
+  html += 'A日程（35,000円）＋V方式（15,000円）を同時出願すると<strong>V方式が0円！</strong>';
+  html += '</div>';
+  Object.entries(mData.faculties).forEach(function(entry) {
+    var faculty = entry[0], depts = entry[1];
+    var isExpanded = kokugakuinState.expandedFaculty === faculty;
+    var selCount = depts.filter(function(d){ return kokugakuinState.selections[faculty + '_' + d]; }).length;
+    var bg = isExpanded ? 'var(--accent)' : 'var(--bg)';
+    var fg = isExpanded ? 'var(--accent-fg)' : 'var(--text)';
+    var bd = isExpanded ? 'var(--accent)' : 'var(--border-strong)';
+    html += '<div style="margin-bottom:8px;">';
+    html += '<button data-action="kokugakuinExpand" data-val="' + escA(faculty) + '" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:' + bg + ';color:' + fg + ';border:1px solid ' + bd + ';border-radius:8px;font-size:13px;cursor:pointer;text-align:left;">';
+    html += '<span style="font-weight:500;">' + faculty + '</span>';
+    html += '<span style="font-size:11px;opacity:0.8;">' + (selCount > 0 ? selCount + '学科 ' : '') + (isExpanded ? '▲' : '▶') + '</span>';
+    html += '</button>';
+    if (isExpanded) {
+      html += '<div style="padding:8px 0 0 8px;">';
+      depts.forEach(function(d) {
+        var key = faculty + '_' + d;
+        var sel = kokugakuinState.selections[key] || { a: false, v: false };
+        var hasBoth = sel.a && sel.v;
+        html += '<div style="margin-bottom:8px;padding:10px 12px;background:var(--bg);border:1px solid ' + (hasBoth ? '#81C784' : 'var(--border)') + ';border-radius:8px;">';
+        html += '<div style="font-size:12px;font-weight:500;margin-bottom:8px;">' + d + '</div>';
+        html += '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
+        html += '<button class="chip ' + (sel.a ? 'selected' : '') + '" data-action="kokugakuinMethod" data-val="' + escA(faculty) + '" data-val2="' + escA(d) + '" data-val3="a">A日程 35,000円</button>';
+        html += '<button class="chip ' + (sel.v ? 'selected' : '') + '" data-action="kokugakuinMethod" data-val="' + escA(faculty) + '" data-val2="' + escA(d) + '" data-val3="v">V方式 ' + (sel.a ? '<span style="color:#4CAF50;font-weight:700;">0円🎉</span>' : '15,000円') + '</button>';
+        html += '</div>';
+        if (hasBoth) html += '<div style="margin-top:6px;font-size:11px;color:#2E7D32;font-weight:500;">✓ 応援割適用！V方式が0円 小計：35,000円</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+// ── 武蔵大学 state ──────────────────────────────────
+// musashiSelections = { "経済学部": ["経済学科","経営学科"] }（学部ごとに選択した学科リスト）
+var musashiState = { expandedFaculty: null, selections: {}, commonTest: {} };
+function resetMusashiState() { musashiState = { expandedFaculty: null, selections: {}, commonTest: {} }; }
+
+function toggleMusashiExpand(faculty) {
+  musashiState.expandedFaculty = musashiState.expandedFaculty === faculty ? null : faculty;
+  render();
+}
+
+function toggleMusashiDept(faculty, dept) {
+  if (!musashiState.selections[faculty]) musashiState.selections[faculty] = [];
+  var arr = musashiState.selections[faculty];
+  var idx = arr.indexOf(dept);
+  if (idx >= 0) arr.splice(idx, 1);
+  else if (arr.length < 3) arr.push(dept);
+  if (arr.length === 0) delete musashiState.selections[faculty];
+  render();
+}
+
+function musashiFlatSelected() {
+  var result = [];
+  Object.entries(musashiState.selections).forEach(function(entry) {
+    var faculty = entry[0], depts = entry[1];
+    depts.forEach(function(d, i) {
+      var fee = i === 0 ? 35000 : 0;
+      result.push(faculty + '（' + d + '）' + (fee === 0 ? '［追加無料］' : ''));
+    });
+  });
+  return result;
+}
+
+function renderMusashiUI(mData) {
+  var html = '<div style="padding:0 14px 14px;">';
+  html += '<div style="margin:0 0 12px;padding:10px 12px;background:#E8F5E9;border:1px solid #81C784;border-radius:8px;font-size:11px;color:#1B5E20;line-height:1.7;">';
+  html += '🎉 <strong>武蔵大学の割引ルール</strong><br>';
+  html += '同一学部内なら最大3学科まで<strong>35,000円据え置き</strong>（2〜3学科目は実質0円）！<br>';
+  html += '2学部目以降を追加する場合は+10,000円/学部。';
+  html += '</div>';
+
+  var faculties = Object.keys(mData.faculties);
+  var selectedFaculties = Object.keys(musashiState.selections).filter(function(f){ return musashiState.selections[f].length > 0; });
+
+  faculties.forEach(function(faculty) {
+    var depts = mData.faculties[faculty];
+    var isExpanded = musashiState.expandedFaculty === faculty;
+    var selected = musashiState.selections[faculty] || [];
+    var isFirstFaculty = selectedFaculties.length === 0 || selectedFaculties[0] === faculty;
+    var facultyFee = selectedFaculties.indexOf(faculty) === 0 ? 35000 : 10000;
+    var bg = isExpanded ? 'var(--accent)' : (selected.length > 0 ? '#E8F5E9' : 'var(--bg)');
+    var fg = isExpanded ? 'var(--accent-fg)' : 'var(--text)';
+    var bd = isExpanded ? 'var(--accent)' : (selected.length > 0 ? '#81C784' : 'var(--border-strong)');
+
+    html += '<div style="margin-bottom:8px;">';
+    html += '<button data-action="musashiExpand" data-val="' + escA(faculty) + '" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:' + bg + ';color:' + fg + ';border:1px solid ' + bd + ';border-radius:8px;font-size:13px;cursor:pointer;text-align:left;">';
+    html += '<span style="font-weight:500;">' + faculty + '</span>';
+    html += '<span style="font-size:11px;opacity:0.8;">' + (selected.length > 0 ? selected.length + '学科選択 ' + (selectedFaculties.indexOf(faculty) > 0 ? '+10,000円' : '35,000円') + ' ' : '') + (isExpanded ? '▲' : '▶') + '</span>';
+    html += '</button>';
+    if (isExpanded) {
+      html += '<div style="padding:8px 8px 0;">';
+      html += '<div style="font-size:11px;color:var(--text-secondary);margin-bottom:8px;">最大3学科まで選択可（同一学部内は追加無料）</div>';
+      html += '<div class="chip-wrap" style="padding:0;">';
+      depts.forEach(function(d) {
+        var sel = selected.includes(d);
+        var disabled = !sel && selected.length >= 3;
+        html += '<button class="chip ' + (sel ? 'selected' : '') + '" ' + (disabled ? 'style="opacity:0.4;cursor:not-allowed;"' : '') + ' data-action="' + (disabled ? '' : 'musashiDept') + '" data-val="' + escA(faculty) + '" data-val2="' + escA(d) + '"><span style="line-height:1.5">' + d + (sel && selected.indexOf(d) > 0 ? ' 🎉' : '') + '</span></button>';
+      });
+      html += '</div></div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  return html;
+}
 function isSenshuScholars(univ, method) { return univ === '専修大学' && method === 'スカラシップ・全国・全学部入学試験（★0円免除あり）'; }
 
 // ── 専修大学 state ──────────────────────────────────
@@ -1571,6 +2472,12 @@ document.addEventListener('click', function(e) {
   else if (a === 'backToStep1') backToStep1();
   else if (a === 'backToStep2') backToStep2();
   else if (a === 'rikkyoExpand') toggleRikkyoExpand(v);
+  else if (a === 'dokkyoExpand') toggleDokkyoExpand(v);
+  else if (a === 'dokkyoMethod') toggleDokkyoMethod(v, v2, v3);
+  else if (a === 'kokugakuinExpand') toggleKokugakuinExpand(v);
+  else if (a === 'kokugakuinMethod') toggleKokugakuinMethod(v, v2, v3);
+  else if (a === 'musashiExpand') toggleMusashiExpand(v);
+  else if (a === 'musashiDept') toggleMusashiDept(v, v2);
   else if (a === 'senshuExpand') toggleSenshuExpand(v);
   else if (a === 'senshuMethod') toggleSenshuMethod(v, v2, v3);
   else if (a === 'toyoDay') selectToyoDay(v);
@@ -1593,6 +2500,81 @@ document.addEventListener('click', function(e) {
 // ── Fee calculation ────────────────────────────────
 function calcRows(univ, method, selected) {
   var m = DB[univ].methods[method];
+  // 大東文化大学 グリーン出願（2つ目0円・3つ目以降+10,000円 or +5,000円）
+  if (isDaitoGreen(univ, method)) {
+    var isCommon = method.indexOf('共通テスト') >= 0;
+    return selected.map(function(f, i) {
+      var fee;
+      if (i === 0) fee = isCommon ? 15000 : 35000;
+      else if (i === 1) fee = 0;
+      else fee = isCommon ? 5000 : 10000;
+      return { name: f, fee: fee };
+    });
+  }
+  // 東海大学 フラット併願（上限55,000円）
+  if (isTokaiFlat(univ, method)) {
+    var total = selected.length > 0 ? 35000 : 0;
+    if (selected.length > 1) total = 55000;
+    return selected.map(function(f, i) {
+      return { name: f, fee: i === 0 ? 35000 : i === 1 ? 20000 : 0 };
+    });
+  }
+  // 東海大学 共通テスト利用（一律15,000円）
+  if (isTokaiCommon(univ, method)) {
+    return selected.map(function(f, i) {
+      return { name: f, fee: i === 0 ? 15000 : 0 };
+    });
+  }
+  // 国士舘大学 +5,000円で併願し放題
+  if (isKokushikanFlat(univ, method)) {
+    var isCommonK = method.indexOf('共通テスト') >= 0;
+    return selected.map(function(f, i) {
+      var fee;
+      if (i === 0) fee = isCommonK ? 15000 : 35000;
+      else fee = isCommonK ? 5000 : 5000;
+      return { name: f, fee: fee };
+    });
+  }
+  // 芝浦工業大学共通テスト利用（4学科目以降0円）
+  if (univ === '芝浦工業大学' && method === '共通テスト利用方式★4学科目以降0円') {
+    return selected.map(function(f, i) {
+      var fee = i === 0 ? 35000 : i < 3 ? 15000 : 0;
+      return { name: f, fee: fee };
+    });
+  }
+  // 獨協大学B方式専用計算
+  if (isDokkyoB(univ, method)) {
+    var normalCount = 0;
+    return selected.map(function(f) {
+      if (f.indexOf('外検＋') >= 0) return { name: f, fee: 0 };
+      normalCount++;
+      var fee = normalCount === 1 ? 35000 : normalCount <= 3 ? 5000 : 5000;
+      return { name: f, fee: fee };
+    });
+  }
+  // 國學院大學応援割専用計算
+  if (isKokugakuinAV(univ, method)) {
+    return selected.map(function(f) {
+      var fee = f.indexOf('0円') >= 0 ? 0 : f.indexOf('V方式') >= 0 ? 15000 : 35000;
+      return { name: f, fee: fee };
+    });
+  }
+  // 武蔵大学専用計算
+  if (isMusashiGeneral(univ, method)) {
+    var faculties = {};
+    return selected.map(function(f) {
+      var match = f.match(/^(.+?)（/);
+      if (!match) return { name: f, fee: 35000 };
+      var faculty = match[1];
+      if (!faculties[faculty]) { faculties[faculty] = 0; }
+      faculties[faculty]++;
+      var fee;
+      if (Object.keys(faculties).length === 1 && faculties[faculty] === 1) fee = 35000;
+      else if (faculties[faculty] > 1) fee = 0;
+      else fee = 10000;
+      return { name: f, fee: fee };
+    });
+  }
   // 専修大学スカラシップは専用計算
   if (isSenshuScholars(univ, method)) {
     return selected.map(function(f) {
@@ -1759,6 +2741,12 @@ function addToCart() {
     selected = rikkyoFlatSelected();
   } else if (isNDUCombined(cur.university, cur.method)) {
     selected = nduFlatSelected();
+  } else if (isDokkyoB(cur.university, cur.method)) {
+    selected = dokkyoCalcFees();
+  } else if (isKokugakuinAV(cur.university, cur.method)) {
+    selected = kokugakuinFlatSelected();
+  } else if (isMusashiGeneral(cur.university, cur.method)) {
+    selected = musashiFlatSelected();
   } else if (isSenshuScholars(cur.university, cur.method)) {
     selected = senshuFlatSelected();
   } else if (isToyoGeneral(cur.university, cur.method)) {
@@ -1785,6 +2773,9 @@ function addToCart() {
   resetNduState();
   resetToyoState();
   resetSenshuState();
+  resetDokkyoState();
+  resetKokugakuinState();
+  resetMusashiState();
   render();
   setTimeout(function(){ var el = document.getElementById('cart-section'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
@@ -1813,6 +2804,9 @@ function backToStep1() {
   resetNduState();
   resetToyoState();
   resetSenshuState();
+  resetDokkyoState();
+  resetKokugakuinState();
+  resetMusashiState();
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1828,6 +2822,9 @@ function backToStep2() {
   resetNduState();
   resetToyoState();
   resetSenshuState();
+  resetDokkyoState();
+  resetKokugakuinState();
+  resetMusashiState();
   render();
   setTimeout(function(){ var el=document.getElementById('step2'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
@@ -1841,6 +2838,9 @@ function selectUniv(u) {
   resetNduState();
   resetToyoState();
   resetSenshuState();
+  resetDokkyoState();
+  resetKokugakuinState();
+  resetMusashiState();
   render();
   setTimeout(function(){ var el=document.getElementById('step2'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
@@ -1854,6 +2854,9 @@ function selectMethod(m) {
   resetNduState();
   resetToyoState();
   resetSenshuState();
+  resetDokkyoState();
+  resetKokugakuinState();
+  resetMusashiState();
   render();
   setTimeout(function(){ var el=document.getElementById('step3'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
@@ -2065,6 +3068,11 @@ function render() {
     if (saved > 0) html += '<div class="savings-bar">&#x1F389; 割引で ' + fmt(saved) + ' 節約！</div>';
     html += '</div></div>';
     html += '<button data-action="resetAll" class="reset-btn">&#x21A9; 全部リセット</button>';
+    html += '<div style="margin-bottom:12px;padding:14px 16px;background:#06C755;border-radius:var(--radius);text-align:center;">';
+    html += '<p style="font-size:12px;color:#fff;margin-bottom:8px;font-weight:500;">📅 製品版で日程管理・書類チェックも！</p>';
+    html += '<a href="https://lin.ee/R0rwEwt" target="_blank" style="display:inline-block;">';
+    html += '<img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" style="border:none;">';
+    html += '</a></div>';
   }
 
   // Step1: 大学選択
@@ -2072,7 +3080,10 @@ function render() {
   var groups = [
     { label: '🎓 早慶上理', univs: ['早稲田大学','慶應義塾大学','上智大学','東京理科大学'] },
     { label: '🏛 GMARCH', univs: ['学習院大学','明治大学','青山学院大学','立教大学','中央大学','法政大学'] },
-    { label: '📚 日東駒専', univs: ['日本大学','東洋大学','駒澤大学','専修大学'] }
+    { label: '⚙️ 四工大', univs: ['芝浦工業大学','工学院大学','東京都市大学','東京電機大学'] },
+    { label: '🌸 成成明学獨國武', univs: ['成蹊大学','成城大学','明治学院大学','獨協大学','國學院大學','武蔵大学'] },
+    { label: '📚 日東駒専', univs: ['日本大学','東洋大学','駒澤大学','専修大学'] },
+    { label: '🌏 大東亜帝国', univs: ['大東文化大学','東海大学','亜細亜大学','帝京大学','国士舘大学'] }
   ];
   html += '<div class="step-card ' + (!s1done ? 'active' : '') + '">';
   html += '<div class="step-header"><div class="step-badge ' + (s1done ? 'done' : 'active') + '">' + (s1done ? '&#x2713;' : '1') + '</div>';
@@ -2081,7 +3092,7 @@ function render() {
   html += '</div></div>';
   groups.forEach(function(group) {
     html += '<div style="padding:0 14px 12px;">';
-    html += '<div style="font-size:11px;font-weight:700;color:var(--text-secondary);margin-bottom:8px;padding:4px 0;border-bottom:1px solid var(--border);">' + group.label + '</div>';
+    html += '<div class="group-label">' + group.label + '</div>';
     html += '<div style="display:flex;flex-wrap:wrap;gap:7px;">';
     group.univs.forEach(function(u) {
       if (DB[u]) {
@@ -2119,6 +3130,9 @@ function render() {
     var chuoH = isChuoHybrid(cur.university, cur.method);
     var rikkyoR = isRikkyo(cur.university);
     var nduC = isNDUCombined(cur.university, cur.method);
+    var dokkyoB = isDokkyoB(cur.university, cur.method);
+    var kokugakuinAV = isKokugakuinAV(cur.university, cur.method);
+    var musashiG = isMusashiGeneral(cur.university, cur.method);
     var senshuS = isSenshuScholars(cur.university, cur.method);
     var toyoG = isToyoGeneral(cur.university, cur.method);
     var aogakuA = isAogakuAll(cur.university, cur.method);
@@ -2127,11 +3141,14 @@ function render() {
     var chuoSel = chuoToSelected();
     var rikkyoSel = rikkyoFlatSelected();
     var nduSel = nduFlatSelected();
+    var dokkyoSel = dokkyoCalcFees();
+    var kokugakuinSel = kokugakuinFlatSelected();
+    var musashiSel = musashiFlatSelected();
     var senshuSel = senshuFlatSelected();
     var toyoSel = toyoFlatSelected();
     var aogakuSel = aogakuA ? aogakuAllSelected() : aogakuI ? aogakuIndSelected() : [];
-    var s3done = hoseiT ? hoseiSel.length > 0 : chuoH ? chuoSel.length > 0 : rikkyoR ? rikkyoSel.length > 0 : nduC ? nduSel.length > 0 : senshuS ? senshuSel.length > 0 : toyoG ? toyoSel.length > 0 : (aogakuA || aogakuI) ? aogakuSel.length > 0 : cur.selected.length > 0;
-    var count3 = hoseiT ? hoseiSel.length : chuoH ? chuoSel.length : rikkyoR ? rikkyoSel.length : nduC ? nduSel.length : senshuS ? senshuSel.length : toyoG ? toyoSel.length : (aogakuA || aogakuI) ? aogakuSel.length : cur.selected.length;
+    var s3done = hoseiT ? hoseiSel.length > 0 : chuoH ? chuoSel.length > 0 : rikkyoR ? rikkyoSel.length > 0 : nduC ? nduSel.length > 0 : dokkyoB ? dokkyoSel.length > 0 : kokugakuinAV ? kokugakuinSel.length > 0 : musashiG ? musashiSel.length > 0 : senshuS ? senshuSel.length > 0 : toyoG ? toyoSel.length > 0 : (aogakuA || aogakuI) ? aogakuSel.length > 0 : cur.selected.length > 0;
+    var count3 = hoseiT ? hoseiSel.length : chuoH ? chuoSel.length : rikkyoR ? rikkyoSel.length : nduC ? nduSel.length : dokkyoB ? dokkyoSel.length : kokugakuinAV ? kokugakuinSel.length : musashiG ? musashiSel.length : senshuS ? senshuSel.length : toyoG ? toyoSel.length : (aogakuA || aogakuI) ? aogakuSel.length : cur.selected.length;
     var isAday = cur.university === '法政大学' && cur.method === 'A日程（個別日程）';
 
     html += '<div class="step-card ' + (s3done ? '' : 'active') + '" id="step3">';
@@ -2168,6 +3185,12 @@ function render() {
       html += renderRikkyoUI(mData);
     } else if (nduC) {
       html += renderNduUI(mData);
+    } else if (dokkyoB) {
+      html += renderDokkyoUI(mData);
+    } else if (kokugakuinAV) {
+      html += renderKokugakuinUI(mData);
+    } else if (musashiG) {
+      html += renderMusashiUI(mData);
     } else if (senshuS) {
       html += renderSenshuUI(mData);
     } else if (toyoG) {
@@ -2183,7 +3206,7 @@ function render() {
     }
 
     if (s3done) {
-      var previewSelected = hoseiT ? hoseiSel : chuoH ? chuoSel : rikkyoR ? rikkyoSel : nduC ? nduSel : senshuS ? senshuSel : toyoG ? toyoSel : (aogakuA || aogakuI) ? aogakuSel : cur.selected;
+      var previewSelected = hoseiT ? hoseiSel : chuoH ? chuoSel : rikkyoR ? rikkyoSel : nduC ? nduSel : dokkyoB ? dokkyoSel : kokugakuinAV ? kokugakuinSel : musashiG ? musashiSel : senshuS ? senshuSel : toyoG ? toyoSel : (aogakuA || aogakuI) ? aogakuSel : cur.selected;
       var previewRows = calcRows(cur.university, cur.method, previewSelected);
       var previewTotal = previewRows.reduce(function(s,r){ return s+r.fee; }, 0);
       var previewNormal = 35000 * previewSelected.length;
@@ -2203,7 +3226,7 @@ function render() {
         html += '<div style="margin-top:6px;font-size:11px;color:var(--green-text);">&#x1F389; 割引で ' + fmt(previewSaved) + ' 節約！</div>';
       }
       html += '</div>';
-      html += '<button data-action="addToCart" style="width:100%;padding:14px;background:var(--accent);color:var(--accent-fg);border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:12px;">+ 受験リストに追加する</button>';
+      html += '<button data-action="addToCart" style="width:100%;padding:14px;background:var(--accent);color:var(--accent-fg);border:none;border-radius:var(--radius);font-size:14px;font-family:\'Noto Sans JP\',sans-serif;font-weight:700;cursor:pointer;margin-bottom:12px;">+ 受験リストに追加する</button>';
     }
 
     html += '</div>';
